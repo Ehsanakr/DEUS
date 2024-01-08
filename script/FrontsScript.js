@@ -77,6 +77,7 @@ introTimeline.from(uniforms.iLoad.value, {
 });
 
 //////////////////////////////Other functions
+
 /* accordion */
 function triggerAccordion() {
   $(".js-accordion__trigger").on("click", (e) => {
