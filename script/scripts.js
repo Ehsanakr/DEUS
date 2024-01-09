@@ -77,7 +77,6 @@ let counterInterval = null;
 function startCounter() {
   counterInterval = setInterval(() => {
     if (counter <= 500) {
-      console.log("Counter:", counter);
       counter+=0.75;
       uniforms.iAnimTimer.value = counter;
     } else {
