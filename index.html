@@ -267,7 +267,6 @@
     uniform vec2 iMousePos;
     uniform vec3 iAnimProgress_1;
     uniform vec3 iAnimProgress_2;
-    uniform vec3 iAnimProgress_3;
     uniform vec3 iAnimProgress_4;
     const ivec2 char_space = ivec2(0, 0);
     const ivec2 char_exclam = ivec2(-2147352576, 135274560);
@@ -1211,7 +1210,7 @@
         p.y -= 0.58;
 
     // Triangle inner glow factor
-        vec3 gcol = HSV2RGB(vec3(1.0, 0.8, 0.006*(1.0-(iAnimProgress_2.z*(1.0-iAnimProgress_1.x)))-((iAnimProgress_1.x-iAnimProgress_1.z)*0.004)));
+        vec3 gcol = HSV2RGB(vec3(1.0, 0.8, 0.006));
 
     // Triangle displacement
         float dt = equilateralTriangle(p);
@@ -1228,14 +1227,14 @@
 
     vec3 anim_2(vec3 col, vec3 ro, vec3 rd) {
         float autoAnim_0 = (iAnimProgress_1.x-iAnimProgress_1.y);   /////in
-        float autoAnim_1 = smoothstep(50.0, 100.0, iAnimTimer); //1.x
-        float autoAnim_2 = smoothstep(100.0, 150.0, iAnimTimer); //1.y
-        float autoAnim_3 = smoothstep(150.0, 200.0, iAnimTimer); //1.z
-        float autoAnim_4 = smoothstep(200.0, 250.0, iAnimTimer); //2.x
-        float autoAnim_5 = smoothstep(250.0, 300.0, iAnimTimer); //2.y
-        float autoAnim_6 = smoothstep(300.0, 350.0, iAnimTimer); //2.z
-        float autoAnim_7 = smoothstep(350.0, 400.0, iAnimTimer); //3.x
-        float autoAnim_8 = smoothstep(400.0, 450.0, iAnimTimer)*(iAnimProgress_1.x-iAnimProgress_1.y); /////out
+        float autoAnim_1 = smoothstep(0.0, 50.0, iAnimTimer); //1.x
+        float autoAnim_2 = smoothstep(50.0, 100.0, iAnimTimer); //1.y
+        float autoAnim_3 = smoothstep(100.0, 150.0, iAnimTimer); //1.z
+        float autoAnim_4 = smoothstep(150.0, 200.0, iAnimTimer); //2.x
+        float autoAnim_5 = smoothstep(200.0, 250.0, iAnimTimer); //2.y
+        float autoAnim_6 = smoothstep(250.0, 300.0, iAnimTimer); //2.z
+        float autoAnim_7 = smoothstep(300.0, 350.0, iAnimTimer); //3.x
+        float autoAnim_8 = smoothstep(350.0, 400.0, iAnimTimer)*(iAnimProgress_1.x-iAnimProgress_1.y); /////out
 
     // Triangle fill color
         vec3 fillColor = HSV2RGB(vec3(0.0, 0.3, 0.0));
@@ -1265,7 +1264,7 @@
     // Triangle displacement
         float dt_hedger = equilateralTriangle(p_tri_hedger);
     // Triangle  visibility ratio
-        if (dt_hedger < 0.0) {col = mix(fillColor, col, 1.0-autoAnim_0);}    // Triangle edge glow modification
+        if (dt_hedger < 0.0) {col = mix(fillColor, col, 1.0-(autoAnim_0*2.0-autoAnim_8*2.0));}    // Triangle edge glow modification
         col += (gcol / max(abs(dt_hedger), 0.001)) * smoothstep(0.5, 0.0, dt_hedger);
         col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_hedger(p_hedger_text, vec2(0.0, -0.03)) * (autoAnim_0 - autoAnim_5));
         col = mix(col, HSV2RGB(vec3(0.0, 0.7 - (autoAnim_8), 1.0)), draw_text_party_b(p_hedger_text, vec2(0.1, -0.03)) * autoAnim_5);
@@ -1288,7 +1287,7 @@
     // Triangle displacement
         float dt_you = equilateralTriangle(p_tri_you);
     // Triangle to scene visibility ratio
-        if (dt_you < 0.0) {col = mix(fillColor, col, 1.0-autoAnim_0);}    // Triangle edge glow modification
+        if (dt_you < 0.0) {col = mix(fillColor, col, 1.0-(autoAnim_0*2.0-autoAnim_8*2.0));}    // Triangle edge glow modification
     // Triangle edge glow modification
         col += (gcol / max(abs(dt_you), 0.001)) * smoothstep(0.5, 0.0, dt_you);
 
@@ -1322,7 +1321,7 @@
         float parabola_h = parabola_q * parabola_q - parabola_p * parabola_p * parabola_p;
         float parabola_r = sqrt(abs(parabola_h));
         float parabola_x = (parabola_h > 0.0) ? pow(parabola_q + parabola_r, 1.0 / 3.0) - pow(abs(parabola_q - parabola_r), 1.0 / 3.0) * sign(parabola_r - parabola_q) : 2.0 * cos(atan(parabola_r, parabola_q) / 3.0) * sqrt(parabola_p);
-
+        
         float sdEye = length(pos - vec2(parabola_x, k * parabola_x * parabola_x)) * sign(pos.x - parabola_x) - bl + 0.06;
 
     // Apply smoothstep to color using sdEye
@@ -1439,7 +1438,6 @@
     // Triangle resize
         vec2 p_right = pp.xy * 0.5;
         vec2 p_left = pp.xy * 0.5;
-    // Add text to triangle
 
     // Triangle offset
         p_left.x += iAnimProgress_1.z / 8.0 - iAnimProgress_2.x / 7.9;
@@ -1457,20 +1455,20 @@
         float dt_right = equilateralTriangle(p_right);
         float smoothStepRight = 1.0 - smoothstep(0.0, 0.002, abs(p_right.x));
         if(p_right.x > 0.0)
-            col = mix((dt_right < 0.0) ? fillColor : col, col, smoothStepRight), col += (gcol / max(abs(dt_right), 0.0)) * smoothstep(1.0, 0.0, dt_right), col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_b(p_right * 2.0, vec2(0.1, 1.13)) * (1.0 - iAnimProgress_4.x));
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_short(p_right * 2.2, vec2(-0.01, 0.98)) * (1.0 - (anim_time_x2.y)) * (quad2 + quad3) * (iAnimProgress_1.z - iAnimProgress_4.x));
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_long(p_right * 2.2, vec2(-0.02, 0.98)) * (1.0 - (anim_time_x2.y)) * (quad1 + quad4) * (iAnimProgress_1.z - iAnimProgress_4.x));
-        col = mix(col, HSV2RGB(vec3(0.3, 1.0, 1.0)), draw_text_plus_onethousand(p_right * 2.0, vec2(0.0, 0.7)) * (1.0 - (anim_time_x2.y)) * (1.0 + anim_time_1.y) * quad1 * (iAnimProgress_1.z - iAnimProgress_4.x));
-        col = mix(col, HSV2RGB(vec3(0.0, 1.0, 0.8)), draw_text_minus_onethousand(p_right * 2.0, vec2(0.0, 0.7)) * (1.0 - (anim_time_x2.y)) * (1.0 + anim_time_1.y) * quad3 * (iAnimProgress_1.z - iAnimProgress_4.x));
+            col = mix((dt_right < 0.0) ? fillColor : col, col, smoothStepRight), col += (gcol / max(abs(dt_right), 0.0)) * smoothstep(1.0, 0.0, dt_right), col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_b(p_right * 2.0, vec2(0.1, 1.13)) * (1.0 - iAnimProgress_2.x));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_short(p_right * 2.2, vec2(-0.01, 0.98)) * (1.0 - (anim_time_x2.y)) * (quad2 + quad3) * (iAnimProgress_1.z - iAnimProgress_2.x));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_long(p_right * 2.2, vec2(-0.02, 0.98)) * (1.0 - (anim_time_x2.y)) * (quad1 + quad4) * (iAnimProgress_1.z - iAnimProgress_2.x));
+        col = mix(col, HSV2RGB(vec3(0.3, 1.0, 1.0)), draw_text_plus_onethousand(p_right * 2.0, vec2(0.0, 0.7)) * (1.0 - (anim_time_x2.y)) * (1.0 + anim_time_1.y) * quad1 * (iAnimProgress_1.z - iAnimProgress_2.x));
+        col = mix(col, HSV2RGB(vec3(0.0, 1.0, 0.8)), draw_text_minus_onethousand(p_right * 2.0, vec2(0.0, 0.7)) * (1.0 - (anim_time_x2.y)) * (1.0 + anim_time_1.y) * quad3 * (iAnimProgress_1.z - iAnimProgress_2.x));
 
         float dt_left = equilateralTriangle(p_left);
         float smoothStepLeft = 1.0 - smoothstep(0.0, 0.002, abs(p_left.x));
         if(p_left.x < 0.0)
-            col = mix((dt_left < 0.0) ? fillColor : col, col, smoothStepLeft), col += (gcol / max(abs(dt_left), 0.0)) * smoothstep(1.0, 0.0, dt_left), col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_a(p_left * 2.0, vec2(2.1, 1.13)) * (1.0 - iAnimProgress_4.x));
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_long(p_left * 2.2, vec2(1.9, 0.98)) * (1.0 - (anim_time_x2.y)) * (quad2 + quad3) * (iAnimProgress_1.z - iAnimProgress_4.x));
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_short(p_left * 2.2, vec2(2.05, 0.98)) * (1.0 - (anim_time_x2.y)) * (quad1 + quad4) * (1.0 - iAnimProgress_4.x));
-        col = mix(col, HSV2RGB(vec3(0.0, 1.0, 1.0)), draw_text_minus_onethousand(p_left * 2.0, vec2(1.6, 0.65)) * (1.0 - (anim_time_x2.y)) * (1.0 + anim_time_1.y) * quad1 * (iAnimProgress_1.z - iAnimProgress_4.x));
-        col = mix(col, HSV2RGB(vec3(0.3, 1.0, 0.8)), draw_text_plus_onethousand(p_left * 2.0, vec2(1.6, 0.65)) * (1.0 - (anim_time_x2.y)) * (1.0 + anim_time_1.y) * quad3 * (iAnimProgress_1.z - iAnimProgress_4.x));
+            col = mix((dt_left < 0.0) ? fillColor : col, col, smoothStepLeft), col += (gcol / max(abs(dt_left), 0.0)) * smoothstep(1.0, 0.0, dt_left), col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_a(p_left * 2.0, vec2(2.1, 1.13)) * (1.0 - iAnimProgress_2.x));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_long(p_left * 2.2, vec2(1.9, 0.98)) * (1.0 - (anim_time_x2.y)) * (quad2 + quad3) * (iAnimProgress_1.z - iAnimProgress_2.x));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_short(p_left * 2.2, vec2(2.05, 0.98)) * (1.0 - (anim_time_x2.y)) * (quad1 + quad4) * (1.0 - iAnimProgress_2.x));
+        col = mix(col, HSV2RGB(vec3(0.0, 1.0, 1.0)), draw_text_minus_onethousand(p_left * 2.0, vec2(1.6, 0.65)) * (1.0 - (anim_time_x2.y)) * (1.0 + anim_time_1.y) * quad1 * (iAnimProgress_1.z - iAnimProgress_2.x));
+        col = mix(col, HSV2RGB(vec3(0.3, 1.0, 0.8)), draw_text_plus_onethousand(p_left * 2.0, vec2(1.6, 0.65)) * (1.0 - (anim_time_x2.y)) * (1.0 + anim_time_1.y) * quad3 * (iAnimProgress_1.z - iAnimProgress_2.x));
 
         return col;
     }
@@ -1512,9 +1510,9 @@
 
         vec3 rcol = outerSkyRender(grr, grr);
 
-        if(iAnimProgress_1.z < 0.01)
+        if(iAnimProgress_1.z < 0.1)
             rcol = anim_1(rcol, gp, grr);
-        if(iAnimProgress_1.x > 0.1 && iAnimProgress_1.y < 0.5)
+        if(iAnimProgress_1.x > 0.1 && iAnimProgress_1.y < 0.9)
             rcol = anim_2(rcol, gp, grr);
         else if(iAnimProgress_1.y >= 0.5 && iAnimProgress_1.z < 0.01)
             rcol = anim_3(rcol, gp, grr);
@@ -1540,16 +1538,16 @@
         vec3 la;  // Camera look at
         if(iResolution.x > 1250.0 && iResolution.x>iResolution.y) {
             // Camera location right - left
-            ro = vec3(10.0-(iClick*10.0) - iAnimProgress_1.x * 2.0  + iAnimProgress_1.z * 2.0 - iAnimProgress_4.x * 1.2,
+            ro = vec3(10.0-(iClick*10.0) - iAnimProgress_1.x * 2.0  + iAnimProgress_1.z * 2.0 - iAnimProgress_2.x * 1.2,
             //Camera location up - down
-            0.5 + iAnimProgress_4.x * 0.5+ (iAnimProgress_2.z*2.0*(1.0-iAnimProgress_1.x)),
+            0.5 + iAnimProgress_2.x * 0.5+ (iAnimProgress_2.z*2.0*(1.0-iAnimProgress_1.x)),
             //Camera location forth - back
             -5.0 - iAnimProgress_1.y * 0.5 + iAnimProgress_1.z * 0.5 + iAnimProgress_2.x * 5.6);
-            // Camrea look right - left
+            // Camera look right - left
             la = vec3(12.0-(iClick*12.0) - iAnimProgress_1.x * 2.0 - iAnimProgress_1.y * 0.6 + iAnimProgress_1.z * 0.5,
-            // Camrea look up - down
+            // Camera look up - down
             1.75 - iAnimProgress_1.z * 0.5 - iAnimProgress_2.x * 0.48,
-            // Camrea look forth - back
+            // Camera look forth - back
             0.0 + iAnimProgress_2.x * 10.0);
             // -------------------Small screen mode
         } else {
@@ -1582,14 +1580,16 @@
         vec3 col = outerSkyRender(rd, rd);
         col = groundRender(col, ro, rd);
 
-        if(iAnimProgress_1.z < 0.01)
+        if(iAnimProgress_1.z < 0.1)
             col = anim_1(col, ro, rd);
 
-        if(iAnimProgress_1.x > 0.1 && iAnimProgress_1.y < 0.5)
+        if(iAnimProgress_1.x > 0.1 && iAnimProgress_1.y < 0.9)
             col = anim_2(col, ro, rd);
-        else if(iAnimProgress_1.y >= 0.5 && iAnimProgress_1.z < 0.01)
+            //Neutrual parties
+        else if(iAnimProgress_1.y >= 0.5 && iAnimProgress_1.z < 0.1)
             col = anim_3(col, ro, rd);
-        else if(iAnimProgress_1.z >= 0.01 )
+            //Symmetrical trade
+        else if(iAnimProgress_1.z >= 0.1 )
             col = anim_4(col, ro, rd);
 
         gl_FragColor = vec4(col, 1.0);
