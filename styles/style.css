@@ -504,11 +504,13 @@ nav[role="custom-dropdown"] ul>li:hover {
 		height: 1.6em;
 		padding: 0.8em 0.5em 0.5em 1em;
 	}
+
 	.cardInner2 {
 		display: flex;
 		flex-direction: column;
 		justify-content: left;
 	}
+
 	.tradeBtn2 {
 		margin: 0 0 0 0.1em;
 		font-size: 2em;
@@ -548,7 +550,22 @@ nav[role="custom-dropdown"] ul>li:hover {
 	z-index: 2;
 	display: flex;
 	flex-direction: column;
-
+	opacity: 1;
+}
+.box__text.one{
+	opacity: 1;
+}
+.box__text.two{
+	opacity: 0;
+}
+.box__text.three{
+	opacity: 0;
+}
+.box__text.four{
+	opacity: 0;
+}
+.box__text.five{
+	opacity: 0;
 }
 
 .box__text .subtitle {
@@ -817,7 +834,7 @@ nav[role="custom-dropdown"] ul>li:hover {
 	html {
 		font-size: calc(0.5vw + 0.7vh);
 	}
-	
+
 	/*---------------------About Us----------------------  */
 	.about_section {
 		padding-top: 5em;
