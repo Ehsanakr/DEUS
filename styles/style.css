@@ -601,7 +601,7 @@ nav[role="custom-dropdown"] ul>li:hover {
 }
 
 
-.box__text .list_top .head-span {
+.head-span {
 	-webkit-text-fill-color: transparent;
 	background: linear-gradient(to right, #ffffff, #e75454);
 	background-clip: text;

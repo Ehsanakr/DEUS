@@ -183,11 +183,11 @@ $.scrollify({
   easing: "easeOutSine",
 });
 
-/*/ scroll to the first section on refresh
+// scroll to the first section on refresh
 $(document).ready(function () {
   $.scrollify.move("#1");
 });
-*/
+
 
 // Dark/Light mode function
 const toggleSwitch = document.getElementById("toggleSwitch");
