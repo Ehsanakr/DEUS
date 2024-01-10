@@ -560,7 +560,11 @@ nav[role="custom-dropdown"] ul>li:hover {
 	flex-direction: column;
 	opacity: 1;
 }
-
+.listheader{
+	font-size: 1.5em;
+	font-weight: 600;
+	width: 40%;
+}
 .box__text.one {
 	opacity: 1;
 }
@@ -663,6 +667,14 @@ nav[role="custom-dropdown"] ul>li:hover {
 	padding-top: 1.5em;
 	transition: opacity 0.1s ease-out, transform 0.5s ease-out;
 	/* Add transition for ease-out effect */
+	background: #e75454;
+	background: -webkit-linear-gradient(to right, #ffffff 0%, #e75454 100%) #e75454;
+	background: -moz-linear-gradient(to right, #ffffff 0%, #e75454 100%) #e75454;
+	background: linear-gradient(to right, #ffffff 0%, #e75454 100%) #e75454;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 
