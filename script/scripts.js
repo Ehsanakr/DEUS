@@ -77,8 +77,8 @@ let counterInterval = null;
 // Start counting function
 function startCounter() {
   counterInterval = setInterval(() => {
-    if (counter <= 500) {
-      counter += 2;
+    if (counter <= 400) {
+      counter += 1;
 
       // Update colors based on the counter value
       updateColors();
@@ -210,7 +210,7 @@ introTimeline.from(uniforms.iAnimProgress_2.value, {
 // Initialize Scrollify with mandatory snap scrolling
 $.scrollify({
   section: "section",
-  scrollSpeed: 1500,
+  scrollSpeed: 2000,
   scrollbars: false,
   setHeights: false,
   snap: true,

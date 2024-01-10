@@ -37,7 +37,7 @@ a {
 	color: rgb(255, 128, 128);
 }
 
-.blue {
+.white {
 	color: rgb(255, 255, 255);
 }
 
@@ -563,28 +563,30 @@ nav[role="custom-dropdown"] ul>li:hover {
 .listheader{
 	font-size: 1.5em;
 	font-weight: 600;
-	width: 40%;
 }
 .box__text.one {
 	opacity: 1;
 }
 
 .box__text.two {
-	padding: 100px 100px;
+	padding: 150px 0 0 100px;
 	text-align: left;
 	opacity: 0;
 	font-size: 2em;
+	width: 40%;
+
 }
 
 .box__text.three {
-	padding: 100px 100px;
+	padding: 150px 0 0 100px;
 	text-align: left;
 	opacity: 0;
 	font-size: 2em;
+	width: 40%;
 }
 
 .box__text.four {
-	padding: 100px 100px;
+	padding: 150px 0 0 100px;
 	text-align: left;
 	opacity: 0;
 	font-size: 2em;

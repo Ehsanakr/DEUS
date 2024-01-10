@@ -112,13 +112,12 @@
             <div class="box__text two" id="text2">
                 <div class="listheader gradiant">HOW TO TRADE DERIVATIVES with INTENTs using SYMMIO.</div>
                 <ul id="colorList">
-                    <li id="item1" class="blue">FORMULATE your INTENT via 3rd party frontend</li>
-                    <li id="item2" class="blue">SEND your INTENT to the pool</li>
-                    <li id="item3" class="blue">Counterparties (Hedgers) SEE your INTENT in the pool</li>
-                    <li id="item4" class="blue">Counterparty (Hedger) CLAIMs your intent</li>
-                    <li id="item5" class="blue">Claimed INTENTs CREATE a trade</li>
-                    <li id="item6" class="blue">Both parties LOCK collateral</li>
-
+                    <li id="item1" class="white">FORMULATE your INTENT via 3rd party frontend</li>
+                    <li id="item2" class="white">SEND your INTENT to the pool</li>
+                    <li id="item3" class="white">Counterparties (Hedgers) SEE your INTENT in the pool</li>
+                    <li id="item4" class="white">Counterparty (Hedger) CLAIMs your intent</li>
+                    <li id="item5" class="white">Claimed INTENTs CREATE a trade</li>
+                    <li id="item6" class="white">Both parties LOCK collateral</li>
                 </ul>
         </section>
 
@@ -1230,7 +1229,7 @@
     vec3 anim_2(vec3 col, vec3 ro, vec3 rd) {
         vec3 inputCol = col;
         
-        float introAnim = clamp(iAnimProgress_1.x*2.0,0.0,1.0);   /////in
+        float introAnim = clamp(iAnimProgress_1.x*1.0,0.0,1.0);   /////in
         float outroAnim = clamp(iAnimProgress_1.y*2.0,0.0,1.0); /////out
 
         float autoAnim_1 = smoothstep(0.0, 50.0, iAnimTimer);
@@ -1257,7 +1256,7 @@
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 0.7)), draw_text_execute(pp.xy, vec2(0.85, -1.2)) * (autoAnim_6 - autoAnim_7));
 
         vec2 p_tri_hedger = p;
-        p_tri_hedger.x -= 0.0 + introAnim-autoAnim_5+autoAnim_8;
+        p_tri_hedger.x -= (0.5 + introAnim/2.0)-autoAnim_5+autoAnim_8;
         vec2 p_hedger_text = p_tri_hedger;
 
     // Triangle glow color
@@ -1280,7 +1279,7 @@
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 0.7)), draw_text_plus_onethousand(p_hedger_text, vec2(-0.23, -0.55)) * (autoAnim_7 - autoAnim_8));
 
         vec2 p_tri_you = p;
-        p_tri_you.x += 0.0 + introAnim - autoAnim_3+autoAnim_8;
+        p_tri_you.x += (0.5 + introAnim/2.0) - autoAnim_3+autoAnim_8;
         vec2 p_you_text = p_tri_you;
 
     // Triangle glow color
@@ -1344,6 +1343,11 @@
         return col;
     }
     vec3 anim_3(vec3 col, vec3 ro, vec3 rd) {
+        vec3 inputCol = col;
+
+        float introAnim = clamp(iAnimProgress_1.y*2.0,0.0,1.0);   /////in
+        float outroAnim = clamp(iAnimProgress_1.z*2.0,0.0,1.0); /////out
+
         vec3 eyecolor = HSV2RGB(vec3(0.0, 0.0, 1.0));
     // Triangle fill color
         vec3 fillColor = HSV2RGB(vec3(0.0, 0.3, 0.0));
@@ -1355,8 +1359,10 @@
         vec3 pp = ro + rd * tpd;
         vec2 p = pp.xy;
     // Add text to triangle
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_b(p, vec2(0.1, -0.03)) * iAnimProgress_1.y);
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_a(p, vec2(2.1, -0.03)) * iAnimProgress_1.y);
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_b(p, vec2(0.1, -0.03)));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_a(p, vec2(2.1, -0.03)));
+        inputCol = mix(inputCol, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_b(p, vec2(0.1, -0.03)));
+        inputCol = mix(inputCol, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_a(p, vec2(2.1, -0.03)));
 
         vec2 anim_time_liq = vec2(sin(iTime / 2.0), cos(iTime / 2.0));
         vec2 liq_quad_helper = vec2(smoothstep(anim_time_liq.x, 0.0, 1.0), smoothstep(anim_time_liq.y, 0.0, 1.0));
@@ -1390,7 +1396,7 @@
     // Add eye to triangle
         col = mix(HSV2RGB(vec3(0.0, 0.0 + (quad3_1 / 1.2), 1.0)), col, eyeRender(col, p_tri_arbit_1, tri_vis_1));
     // Add text to triangle
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0 + (quad3_1 / 1.2), 1.0 * (iAnimProgress_1.y - iAnimProgress_1.z))), draw_text_arbiter(p_tri_arbit_1, vec2(1.0, 0.5)) * (iAnimProgress_1.y - iAnimProgress_1.z) * tri_vis_1);
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0 + (quad3_1 / 1.2), 1.0)), draw_text_arbiter(p_tri_arbit_1, vec2(1.0, 0.5)) * tri_vis_1);
         col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_liquidate(p, vec2(1.0, -1.2)) * (1.0 - anim_time_1.y) * quad3_1);
         col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.5)), (draw_text_minus_onethousand(p, vec2(1.75, -0.3 - anim_time_1.y / 6.0)) * (1.0 - anim_time_1.x) * quad3_1 * liq_quad3));
         col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.5)), (draw_text_minus_onethousand(p, vec2(-0.2, -0.3 - anim_time_1.y / 6.0)) * (1.0 - anim_time_1.y) * quad3_1 * liq_quad1));
@@ -1420,7 +1426,7 @@
     // Add eye to triangle
         col = mix(HSV2RGB(vec3(0.0, 0.0, 1.0)), col, eyeRender(col, p_tri_arbit_2, tri_vis_2));
     // Add text to triangle
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0 * (iAnimProgress_1.y - iAnimProgress_1.z))), draw_text_arbiter(p_tri_arbit_2, vec2(1.0, 0.5)) * (iAnimProgress_1.y - iAnimProgress_1.z) * tri_vis_2);
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_arbiter(p_tri_arbit_2, vec2(1.0, 0.5)) * tri_vis_2);
     // Add text to triangle
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_solvent(p, vec2(0.88, -1.2)) * (1.0 - anim_time_2.y) * quad3_2);
         col = mix(col, HSV2RGB(vec3(0.4, 1.0, 1.5)), (draw_text_safu(p, vec2(-0.40, -0.3)) * (1.0 - anim_time_2.y) * quad3_2 * liq_quad3));
@@ -1428,10 +1434,14 @@
         col = mix(col, HSV2RGB(vec3(0.4, 1.0, 1.5)), (draw_text_safu(p, vec2(1.75, -0.3)) * (1.0 - anim_time_2.y) * quad3_2 * liq_quad3));
         col = mix(col, HSV2RGB(vec3(0.4, 1.0, 1.5)), (draw_text_safu(p, vec2(1.75, -0.3)) * (1.0 - anim_time_2.y) * quad3_2 * liq_quad2));
 
-        return col;
+        return mix(col,inputCol,1.0-(introAnim-outroAnim));
     }
 
     vec3 anim_4(vec3 col, vec3 ro, vec3 rd) {
+        vec3 inputCol = col;
+
+        float introAnim = max(iAnimProgress_1.z-0.5,0.0);   /////in
+        float outroAnim = max(iAnimProgress_2.x-0.5,0.0); /////out
     // Triangle fill color
         vec3 fillColor = HSV2RGB(vec3(0.0, 0.3, 0.0));
     // Triangle inner glow factor
@@ -1446,8 +1456,8 @@
         vec2 p_left = pp.xy * 0.5;
 
     // Triangle offset
-        p_left.x += iAnimProgress_1.z / 8.0 - iAnimProgress_2.x / 7.9;
-        p_right.x -= iAnimProgress_1.z / 8.0 - iAnimProgress_2.x / 7.9;
+        p_left.x += introAnim/4.0 - outroAnim/3.95;
+        p_right.x -= introAnim/4.0 - outroAnim/3.95;
 
         vec2 anim_time_1 = vec2(sin(iTime / 2.0), cos(iTime / 2.0));
         vec2 anim_time_x2 = vec2(sin(iTime), cos(iTime));
@@ -1516,13 +1526,13 @@
 
         vec3 rcol = outerSkyRender(grr, grr);
 
-        if(iAnimProgress_1.z < 0.1)
+        if(iAnimProgress_1.z < 0.5)
             rcol = anim_1(rcol, gp, grr);
-        if(iAnimProgress_1.x > 0.1 && iAnimProgress_1.y < 0.9)
+        if(iAnimProgress_1.x > 0.1 && iAnimProgress_1.y < 0.5)
             rcol = anim_2(rcol, gp, grr);
-        else if(iAnimProgress_1.y >= 0.5 && iAnimProgress_1.z < 0.01)
+        else if(iAnimProgress_1.y >= 0.5 && iAnimProgress_1.z < 0.5)
             rcol = anim_3(rcol, gp, grr);
-        else if(iAnimProgress_1.z >= 0.01)
+        else if(iAnimProgress_1.z >= 0.5)
             rcol = anim_4(rcol, gp, grr);
             rcol *= 1.0 - (iAnimProgress_1.x * 0.7);
         // Tiles calculations
@@ -1586,16 +1596,16 @@
         vec3 col = outerSkyRender(rd, rd);
         col = groundRender(col, ro, rd);
 
-        if(iAnimProgress_1.z < 0.1)
+        if(iAnimProgress_1.z < 0.5)
             col = anim_1(col, ro, rd);
 
-        if(iAnimProgress_1.x > 0.1 && iAnimProgress_1.y < 0.9)
+        if(iAnimProgress_1.x > 0.1 && iAnimProgress_1.y < 0.5)
             col = anim_2(col, ro, rd);
             //Neutrual parties
-        else if(iAnimProgress_1.y >= 0.5 && iAnimProgress_1.z < 0.1)
+        else if(iAnimProgress_1.y >= 0.5 && iAnimProgress_1.z < 0.5)
             col = anim_3(col, ro, rd);
             //Symmetrical trade
-        else if(iAnimProgress_1.z >= 0.1 )
+        else if(iAnimProgress_1.z >= 0.5 )
             col = anim_4(col, ro, rd);
 
         gl_FragColor = vec4(col, 1.0);
