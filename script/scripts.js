@@ -78,7 +78,7 @@ let counterInterval = null;
 function startCounter() {
   counterInterval = setInterval(() => {
     if (counter <= 500) {
-      counter += 0.75;
+      counter += 2;
 
       // Update colors based on the counter value
       updateColors();
@@ -302,22 +302,18 @@ $(window).scroll(function () {
   const sections = document.querySelectorAll(".sectionWrap");
   const texts = document.querySelectorAll(".box__text");
 
-  document.addEventListener("scroll", () => {
-    const scrollPosition = window.scrollY;
-
-    sections.forEach((section, index) => {
-      const rect = section.getBoundingClientRect();
-      const isVisible =
-        rect.top <= window.innerHeight / 2 &&
-        rect.bottom >= window.innerHeight / 2;
-      if (isVisible) {
-        const opacity =
-          1 - Math.max(0, Math.min(1, Math.abs(rect.top) / window.innerHeight));
-        texts[index].style.opacity = opacity;
-      } else {
-        texts[index].style.opacity = 0;
-      }
-    });
+  sections.forEach((section, index) => {
+    const rect = section.getBoundingClientRect();
+    const isVisible =
+      rect.top <= window.innerHeight / 2 &&
+      rect.bottom >= window.innerHeight / 2;
+    if (isVisible) {
+      const opacity =
+        1 - Math.max(0, Math.min(1, Math.abs(rect.top) / window.innerHeight));
+      texts[index].style.opacity = opacity;
+    } else {
+      texts[index].style.opacity = 0;
+    }
   });
 
   const scrollPosition = $(this).scrollTop();

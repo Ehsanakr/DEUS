@@ -1228,7 +1228,11 @@
 
 
     vec3 anim_2(vec3 col, vec3 ro, vec3 rd) {
-        float introAnim = (iAnimProgress_1.x-iAnimProgress_1.y);   /////in
+        vec3 inputCol = col;
+        
+        float introAnim = clamp(iAnimProgress_1.x*2.0,0.0,1.0);   /////in
+        float outroAnim = clamp(iAnimProgress_1.y*2.0,0.0,1.0); /////out
+
         float autoAnim_1 = smoothstep(0.0, 50.0, iAnimTimer);
         float autoAnim_2 = smoothstep(50.0, 100.0, iAnimTimer);
         float autoAnim_3 = smoothstep(100.0, 150.0, iAnimTimer);
@@ -1237,7 +1241,6 @@
         float autoAnim_6 = smoothstep(250.0, 300.0, iAnimTimer);
         float autoAnim_7 = smoothstep(300.0, 350.0, iAnimTimer);
         float autoAnim_8 = smoothstep(350.0, 400.0, iAnimTimer); /////back
-        float outroAnim = clamp(iAnimProgress_1.x*2.0-iAnimProgress_1.y*2.0,0.0,1.0); /////out
 
     // Triangle fill color
         vec3 fillColor = HSV2RGB(vec3(0.0, 0.3, 0.0));
@@ -1249,16 +1252,16 @@
         float tpd = rayPlane(ro, rd, tpdim);
         vec3 pp = ro + rd * tpd;
         vec2 p = pp.xy;
-        col = mix(col, HSV2RGB(vec3(0.0, 0.3, 1.0)), draw_text_pool(pp.xy, vec2(1.21, -1.6)) * (introAnim - autoAnim_8));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.3, 1.0)), draw_text_pool(pp.xy, vec2(1.21, -1.6)) );
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 0.7)), draw_text_lock(pp.xy, vec2(0.85, -1.2)) * (autoAnim_7 - autoAnim_8));
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 0.7)), draw_text_execute(pp.xy, vec2(0.85, -1.2)) * (autoAnim_6 - autoAnim_7));
 
         vec2 p_tri_hedger = p;
-        p_tri_hedger.x -= 0.0 + introAnim-autoAnim_5;
+        p_tri_hedger.x -= 0.0 + introAnim-autoAnim_5+autoAnim_8;
         vec2 p_hedger_text = p_tri_hedger;
 
     // Triangle glow color
-        gcol = HSV2RGB(vec3(0.0, 0.9, 0.006*(introAnim-autoAnim_8)-((autoAnim_1-autoAnim_4)*0.003)));
+        gcol = HSV2RGB(vec3(0.0, 0.9, 0.006-((autoAnim_1-autoAnim_4)*0.003)));
     // Triangle resize
         p_tri_hedger *= 1.0;
     // Triangle y offset
@@ -1267,21 +1270,21 @@
     // Triangle displacement
         float dt_hedger = equilateralTriangle(p_tri_hedger);
     // Triangle  visibility ratio
-        if (dt_hedger < 0.0) {col = mix(fillColor, col, 1.0-(introAnim-autoAnim_8));}    // Triangle edge glow modification
+        if (dt_hedger < 0.0) {col = mix(fillColor, col, 0.0);}    // Triangle edge glow modification
         col += (gcol / max(abs(dt_hedger), 0.001)) * smoothstep(0.5, 0.0, dt_hedger);
-        col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_hedger(p_hedger_text, vec2(0.0, -0.03)) * (introAnim - autoAnim_5));
-        col = mix(col, HSV2RGB(vec3(0.0, 0.7 - (autoAnim_8), 1.0)), draw_text_party_b(p_hedger_text, vec2(0.1, -0.03)) * autoAnim_5);
+        col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_hedger(p_hedger_text, vec2(0.0, -0.03)) * (1.0 - (autoAnim_5-autoAnim_8)));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.7 , 1.0)), draw_text_party_b(p_hedger_text, vec2(0.1, -0.03)) * (autoAnim_5-autoAnim_8));
 
         col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_intent_b(p_hedger_text, vec2(-0.03 + (sin(autoAnim_6 * 3.142)) * 0.7, -0.25)) * (autoAnim_5 - autoAnim_6));
         col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_btc_short(p_hedger_text, vec2(+0.01 + (sin(autoAnim_6 * 3.142)) * 0.7, -0.25)) * (autoAnim_6 - autoAnim_8));
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 0.7)), draw_text_plus_onethousand(p_hedger_text, vec2(-0.23, -0.55)) * (autoAnim_7 - autoAnim_8));
 
         vec2 p_tri_you = p;
-        p_tri_you.x += 0.0 + introAnim - autoAnim_3;
+        p_tri_you.x += 0.0 + introAnim - autoAnim_3+autoAnim_8;
         vec2 p_you_text = p_tri_you;
 
     // Triangle glow color
-        gcol = HSV2RGB(vec3(0.0, 0.4, 0.006*(introAnim-autoAnim_8)-((autoAnim_1-autoAnim_2)*0.003)));
+        gcol = HSV2RGB(vec3(0.0, 0.4, 0.006-((autoAnim_1-autoAnim_2)*0.003)));
     // Triangle resize
         p_tri_you *= 1.0;
     // Triangle y offset
@@ -1290,17 +1293,17 @@
     // Triangle displacement
         float dt_you = equilateralTriangle(p_tri_you);
     // Triangle to scene visibility ratio
-        if (dt_you < 0.0) {col = mix(fillColor, col, 1.0-(introAnim-autoAnim_8));}    // Triangle edge glow modification
+        if (dt_you < 0.0) {col = mix(fillColor, col, 0.0);}    // Triangle edge glow modification
     // Triangle edge glow modification
         col += (gcol / max(abs(dt_you), 0.001)) * smoothstep(0.5, 0.0, dt_you);
 
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_you(p_you_text, vec2(1.7, -0.03)) * (introAnim - autoAnim_3));
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_a(p_you_text, vec2(2.1, -0.03)) * autoAnim_3);
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_intent_a(p_you_text, vec2(1.97 - (sin(autoAnim_6 * 3.142)) * 0.7, -0.25)) * (autoAnim_2 - autoAnim_6));
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_long(p_you_text, vec2(1.91 - (sin(autoAnim_6 * 3.142)) * 0.7, -0.25)) * (autoAnim_6 - autoAnim_8));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_you(p_you_text, vec2(1.7, -0.03)) * (1.0 - (autoAnim_3-autoAnim_8)));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_a(p_you_text, vec2(2.1, -0.03)) * (autoAnim_3-autoAnim_8));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_intent_a(p_you_text, vec2(1.97 - (sin(autoAnim_6 * 3.142)) * 1.3, -0.25)) * (autoAnim_2 - autoAnim_6));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_long(p_you_text, vec2(1.91 - (sin(autoAnim_6 * 3.142)) * 1.3, -0.25)) * (autoAnim_6 - autoAnim_8));
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 0.7)), draw_text_plus_onethousand(p_you_text, vec2(1.78, -0.55)) * (autoAnim_7 - autoAnim_8));
 
-        return col;
+        return mix(col,inputCol,1.0-(introAnim-outroAnim));
     }
 
 
