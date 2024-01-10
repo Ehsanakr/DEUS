@@ -1,4 +1,4 @@
-//////////////////////////////THREE.JS(core)
+//---THREE.JS---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 let camera, scene, renderer, uniforms, scrollProgress;
 
 init();
@@ -52,8 +52,6 @@ function handleMouseMove(event) {
   uniforms.iMousePos.value.y = window.innerHeight - event.clientY;
 }
 
-//
-
 function animate() {
   requestAnimationFrame(animate);
 
@@ -68,8 +66,9 @@ function animate() {
 
   renderer.render(scene, camera);
 }
+//---THREE.JS---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
-
+//---GSAP---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 let counter = 0;
 let counterInterval = null;
 
@@ -77,7 +76,7 @@ let counterInterval = null;
 function startCounter() {
   counterInterval = setInterval(() => {
     if (counter <= 500) {
-      counter+=0.75;
+      counter += 0.75;
       uniforms.iAnimTimer.value = counter;
     } else {
       // Reset the counter to 0 when it reaches 100
@@ -164,131 +163,14 @@ gsap.to(uniforms.iAnimProgress_2.value, {
   },
 });
 
-// Create a timeline for the intro animation
+// Intro animation timeline
 const introTimeline = gsap.timeline();
-// Add an initial state for iAnimProgress_2.z
 introTimeline.from(uniforms.iAnimProgress_2.value, {
-  z: 2, // Set the initial value
-  duration: 3.0, // Adjust the duration as needed
+  z: 2,
+  duration: 3.0,
 });
-//***********     text gsap     ***********//
-
-// Set up content scroll triggers
-gsap.registerPlugin(ScrollTrigger);
-
-const content = [
-  {
-    list_top: "",
-    title: "",
-    subtitle:
-      "Bilateral OTC Derivatives with Intent-Based execution.<br/>Leverage trade any asset permissionlessly with hyper-efficient liquidity.",
-    titleSYMM: "SYMMIO",
-    list_top: "",
-    selector: ".sectionWrap.one",
-  },
-  {
-    titleSYMM: "",
-    title: "",
-    subtitle: "",
-    list_top:
-      "<span class= head-span>HOW TO TRADE DERIVATIVES<br>with INTENTs using SYMMIO.</span> " +
-      "</br></br>" +
-      " <span>• FORMULATE your INTENT via 3rd party frontend</span></br>" +
-      " <span>• SEND your INTENT to the pool</span></br>" +
-      " <span>• Counterparties (Hedgers) SEE your INTENT in the pool</span></br>" +
-      " <span>• Counterparty (Hedger) CLAIMs your intent</span></br>" +
-      " <span>• Claimed INTENTs CREATE a trade</span></br>" +
-      " <span>• Both parties LOCK collateral</span>",
-
-    selector: ".sectionWrap.two",
-  },
-  {
-    titleSYMM: "",
-    list_top: "",
-    title: "",
-    subtitle: "",
-    list_top:
-      "<span class= head-span>Neutral Parties as Arbiters</span> " +
-      "</br></br>" +
-      " <span class=active-span>Arbiters are advanced liquidators ensuring all parties adhere to the rules and maintain solvency. </span></br></br>" +
-      " <span class=active-span>Both sides can be liquidated and their actions disputed, creating a trustless and highly capital efficient system.</span></br>",
-    selector: ".sectionWrap.three",
-  },
-  {
-    titleSYMM: "",
-    title: "",
-    subtitle: "",
-    list_top:
-      "<span class= head-span>PartyA and PartyB are SYMMETRICAL</span> " +
-      "</br></br>" +
-      " <span class=active-span>One side LONGs 1 BTC.</span></br>" +
-      " <span class=active-span>The other side SHORTs 1 BTC.</span></br>" +
-      " <span class=active-span>The loss of one side is the win of the other.</span></br>",
-    selector: ".sectionWrap.four",
-  },
-  {
-    titleSYMM: "",
-    title: "",
-    subtitle: "",
-    list_top: "",
-    selector: ".sectionWrap.five",
-  },
-];
-
-content.forEach((item, i, arr) => {
-  const onUpdate = function () {
-    const time = this.time();
-    const duration = this.duration();
-
-    if (time >= duration || time <= 0) {
-      return;
-    }
-  };
-  // Create a timeline for the intro animation
-  const introTimeline = gsap.timeline();
-
-  // Add fade-in animation for the titles, subtitles, and other elements
-  introTimeline.from(
-    `${item.selector} .box__text`,
-    { opacity: 0, duration: 5 },
-    0
-  );
-
-  const timeline = new gsap.timeline({
-    scrollTrigger: {
-      trigger: item.selector,
-      scrub: true,
-      start: "top 75%",
-      end: `bottom ${i < arr.length - 1 ? "75%" : "bottom"}`,
-    },
-  })
-    .to(
-      `${item.selector} .title`,
-      { text: `${item.title}`, ease: "linear", duration: 0.2, onUpdate },
-      0
-    )
-    .to(
-      `${item.selector} .titleSYMM`,
-      { text: `${item.titleSYMM}`, ease: "linear", duration: 0.2, onUpdate },
-      0
-    )
-    .to(
-      `${item.selector} .subtitle`,
-      { text: `${item.subtitle}`, ease: "linear", duration: 0.2, onUpdate },
-      0
-    )
-    .to(
-      `${item.selector} .list_top`,
-      { text: `${item.list_top}`, ease: "linear", duration: 0, onUpdate },
-      0
-    );
-
-  if (i < arr.length - 1) {
-    timeline.yoyo(true).repeat(1).repeatDelay(0.5);
-  }
-});
-
-//***********     Other functions     ***********//
+//---GSAP---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+//---SCROLLIFY---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 // Initialize Scrollify with mandatory snap scrolling
 $.scrollify({
@@ -305,7 +187,7 @@ $.scrollify({
 $(document).ready(function () {
   $.scrollify.move("#1");
 });
-*/ 
+*/
 
 // Dark/Light mode function
 const toggleSwitch = document.getElementById("toggleSwitch");
@@ -361,7 +243,10 @@ $('a[href^="#"]').on("click", function (event) {
     $.scrollify.move(index);
   }
 });
-// ******************** scroll functions ********************
+//---SCROLLIFY---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+
+//---SCROLLFUNCTIONS---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 $(window).scroll(function () {
   //scroll down icon invertion
@@ -381,19 +266,28 @@ $(window).scroll(function () {
   $("#progressbar").css("height", scrollPercent + "px");
 
   //caption text visibility
-  const toggleSwitch = document.querySelector(".minimal-switch");
-  const captionElement = document.querySelector(".captionMain");
+  const sections = document.querySelectorAll(".sectionWrap");
+  const texts = document.querySelectorAll(".box__text");
 
-  var scrollThreshold = window.innerHeight * 0.2;
+  document.addEventListener("scroll", () => {
+    const scrollPosition = window.scrollY;
+
+    sections.forEach((section, index) => {
+      const rect = section.getBoundingClientRect();
+      const isVisible =
+        rect.top <= window.innerHeight / 2 &&
+        rect.bottom >= window.innerHeight / 2;
+      if (isVisible) {
+        const opacity =
+          1 - Math.max(0, Math.min(1, Math.abs(rect.top) / window.innerHeight));
+        texts[index].style.opacity = opacity;
+      } else {
+        texts[index].style.opacity = 0;
+      }
+    });
+  });
+
   const scrollPosition = $(this).scrollTop();
-  if (scrollPosition >= scrollThreshold) {
-    captionElement.style.opacity = 0.0;
-    toggleSwitch.style.opacity = 0.0;
-  } else {
-    toggleSwitch.style.opacity = 1.0;
-    captionElement.style.opacity = 1.0;
-  }
-
   // Highlight current section in menu on scroll
   $("section").each(function () {
     var sectionTop = $(this).offset().top;
@@ -412,8 +306,9 @@ $(window).scroll(function () {
     }
   });
 });
+//---SCROLLFUNCTIONS---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
-// ******************** changing word ********************
+//---ROLLDOWNTEXT---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 const changingWords = [
   "CRYPTOS",
@@ -458,5 +353,4 @@ updateChangingWord();
 
 // Set up a timer to change the word at intervals
 setInterval(updateChangingWord, 3000); // Change the word every 3 seconds, adjust as needed
-
-
+//---ROLLDOWNTEXT---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
