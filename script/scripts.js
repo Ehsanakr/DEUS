@@ -154,16 +154,18 @@ function updateColors() {
   }
 
   // Update colors based on the counter value
-  if (counter >= 0 && counter < 100) {
+  if (counter >= 50 && counter < 100) {
     items[0].className = "red";
-  } else if (counter >= 100 && counter < 200) {
+  } else if (counter >= 100 && counter < 150) {
     items[1].className = "red";
-  } else if (counter >= 200 && counter < 300) {
+  } else if (counter >= 150 && counter < 200) {
     items[2].className = "red";
-  } else if (counter >= 300 && counter < 400) {
+  } else if (counter >= 200 && counter < 250) {
     items[3].className = "red";
-  } else if (counter >= 400 && counter <= 500) {
+  } else if (counter >= 250 && counter < 300) {
     items[4].className = "red";
+  } else if (counter >= 300 && counter <= 350) {
+    items[5].className = "red";
   }
 }
 
