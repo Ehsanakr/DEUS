@@ -73,14 +73,21 @@ let counter = 0;
 let counterInterval = null;
 
 // Start counting function
+
+// Start counting function
 function startCounter() {
   counterInterval = setInterval(() => {
     if (counter <= 500) {
       counter += 0.75;
+
+      // Update colors based on the counter value
+      updateColors();
+
       uniforms.iAnimTimer.value = counter;
     } else {
-      // Reset the counter to 0 when it reaches 100
+      // Reset the counter to 0 when it reaches 500
       counter = 0;
+
       uniforms.iAnimTimer.value = counter;
     }
   }, 50); // Adjust the interval duration as needed
@@ -91,6 +98,9 @@ function resetCounter() {
   clearInterval(counterInterval); // Stop the counter interval
   counterInterval = null; // Set counterInterval to null
   counter = 0; // Reset the counter to 0
+
+  // Reset colors to the initial state
+  updateColors();
 }
 // Check conditions using ScrollTrigger
 gsap.to(uniforms.iAnimProgress_1.value, {
@@ -116,8 +126,9 @@ gsap.to(uniforms.iAnimProgress_1.value, {
 });
 
 // Function to check conditions and start/stop counting
+// Function to check conditions and start/stop counting
 function animCounter() {
-  // Check if iAnimProgress_1.x is more than 0.5 and iAnimProgress_1.y is less than 0.5
+  // Check if iAnimProgress_1.x is more than 0.1 and iAnimProgress_1.y is less than 0.9
   if (
     uniforms.iAnimProgress_1.value.x > 0.1 &&
     uniforms.iAnimProgress_1.value.y < 0.9
@@ -127,10 +138,32 @@ function animCounter() {
       startCounter();
     }
   } else {
-    counter = 0;
-    uniforms.iAnimTimer.value = 0;
     // Reset and stop counting if conditions are not met
     resetCounter();
+  }
+}
+
+// Function to update colors based on the counter value
+function updateColors() {
+  const colorList = document.getElementById("colorList");
+  const items = colorList.getElementsByTagName("li");
+
+  // Reset all items to blue
+  for (let i = 0; i < items.length; i++) {
+    items[i].className = "blue";
+  }
+
+  // Update colors based on the counter value
+  if (counter >= 0 && counter < 100) {
+    items[0].className = "red";
+  } else if (counter >= 100 && counter < 200) {
+    items[1].className = "red";
+  } else if (counter >= 200 && counter < 300) {
+    items[2].className = "red";
+  } else if (counter >= 300 && counter < 400) {
+    items[3].className = "red";
+  } else if (counter >= 400 && counter <= 500) {
+    items[4].className = "red";
   }
 }
 
@@ -188,7 +221,6 @@ $(document).ready(function () {
   $.scrollify.move("#1");
 });
 
-
 // Dark/Light mode function
 const toggleSwitch = document.getElementById("toggleSwitch");
 const htmlElement = document.querySelector("html");
@@ -244,7 +276,6 @@ $('a[href^="#"]').on("click", function (event) {
   }
 });
 //---SCROLLIFY---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-
 
 //---SCROLLFUNCTIONS---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
