@@ -573,11 +573,17 @@ nav[role="custom-dropdown"] ul>li:hover {
 }
 
 .box__text.three {
+	padding: 100px 100px;
+	text-align: left;
 	opacity: 0;
+	font-size: 2em;
 }
 
 .box__text.four {
+	padding: 100px 100px;
+	text-align: left;
 	opacity: 0;
+	font-size: 2em;
 }
 
 .box__text.five {
