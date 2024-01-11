@@ -58,8 +58,9 @@ a {
 }
 
 
-
-
+.disabled {
+    pointer-events: none;
+}
 
 
 ::-webkit-scrollbar {
@@ -341,17 +342,6 @@ nav[role="custom-dropdown"] ul>li:hover {
 	transform: translate3d(-10px, -10px, 0);
 }
 
-/* Trade button styles */
-.trade-switch {
-	width: 20px;
-	height: 20px;
-}
-
-.trade-switch input {
-	opacity: 0;
-	width: 0;
-	height: 0;
-}
 
 .tradeBtn,
 .tradeBtn2 {
@@ -520,7 +510,7 @@ nav[role="custom-dropdown"] ul>li:hover {
 	}
 
 	.tradeBtn2 {
-		margin: 0 0 0 0.1em;
+		margin: 0 0 0 0.5em;
 		font-size: 2em;
 	}
 
@@ -559,6 +549,8 @@ nav[role="custom-dropdown"] ul>li:hover {
 	display: flex;
 	flex-direction: column;
 	opacity: 1;
+	cursor: default;
+
 }
 
 .box__text.one {
@@ -569,7 +561,7 @@ nav[role="custom-dropdown"] ul>li:hover {
 	font-weight: 600;
 }
 .box__text.two {
-	padding: 150px 0 0 100px;
+	padding: 100px 0 0 100px;
 	text-align: left;
 	opacity: 0;
 	font-size: 2.2rem;
@@ -577,7 +569,7 @@ nav[role="custom-dropdown"] ul>li:hover {
 }
 
 .box__text.three {
-	padding: 150px 0 0 100px;
+	padding: 100px 0 0 100px;
 	text-align: left;
 	opacity: 0;
 	font-size: 2.2rem;
@@ -585,7 +577,7 @@ nav[role="custom-dropdown"] ul>li:hover {
 }
 
 .box__text.four {
-	padding: 150px 0 0 100px;
+	padding: 100px 0 0 100px;
 	text-align: left;
 	opacity: 0;
 	font-size: 2.2em;
@@ -867,10 +859,33 @@ nav[role="custom-dropdown"] ul>li:hover {
 	html {
 		font-size: calc(0.5vw + 0.7vh);
 	}
-
+	.box__text.two {
+		padding: 80px 0 0 5%;
+		text-align: left;
+		opacity: 0;
+		font-size: 1.8rem;
+		width: 90%;
+	}
+	
+	.box__text.three {
+		padding: 80px 0 0 5%;
+		text-align: left;
+		opacity: 0;
+		font-size: 1.8rem;
+		width: 90%;
+	}
+	
+	.box__text.four {
+		padding: 80px 0 0 5%;
+		text-align: left;
+		opacity: 0;
+		font-size: 1.8rem;
+		width: 90%;
+	}
 	/*---------------------About Us----------------------  */
 	.about_section {
-		padding-top: 5em;
+		padding-top: calc(80px - 1.5em);
+		height: 90vh;
 	}
 
 	.about {

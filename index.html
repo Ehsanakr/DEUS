@@ -1260,7 +1260,7 @@
         vec2 p_hedger_text = p_tri_hedger;
 
     // Triangle glow color
-        gcol = HSV2RGB(vec3(0.0, 0.9, 0.006-((autoAnim_1-autoAnim_4)*0.003)));
+        gcol = HSV2RGB(vec3(0.0, 0.9, 0.005-((autoAnim_1-autoAnim_4)*0.004)));
     // Triangle resize
         p_tri_hedger *= 1.0;
     // Triangle y offset
@@ -1274,8 +1274,8 @@
         col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_hedger(p_hedger_text, vec2(0.0, -0.03)) * (1.0 - (autoAnim_5-autoAnim_8)));
         col = mix(col, HSV2RGB(vec3(0.0, 0.7 , 1.0)), draw_text_party_b(p_hedger_text, vec2(0.1, -0.03)) * (autoAnim_5-autoAnim_8));
 
-        col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_intent_b(p_hedger_text, vec2(-0.03 + (sin(autoAnim_6 * 3.142)) * 0.7, -0.25)) * (autoAnim_5 - autoAnim_6));
-        col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_btc_short(p_hedger_text, vec2(+0.01 + (sin(autoAnim_6 * 3.142)) * 0.7, -0.25)) * (autoAnim_6 - autoAnim_8));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_intent_b(p_hedger_text, vec2(-0.03 + (sin(autoAnim_6 * 3.142)) * 1.0, -0.25)) * (autoAnim_5 - autoAnim_6));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.7, 1.0)), draw_text_btc_short(p_hedger_text, vec2(+0.01 + (sin(autoAnim_6 * 3.142)) * 1.0, -0.25)) * (autoAnim_6 - autoAnim_8));
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 0.7)), draw_text_plus_onethousand(p_hedger_text, vec2(-0.23, -0.55)) * (autoAnim_7 - autoAnim_8));
 
         vec2 p_tri_you = p;
@@ -1283,7 +1283,7 @@
         vec2 p_you_text = p_tri_you;
 
     // Triangle glow color
-        gcol = HSV2RGB(vec3(0.0, 0.4, 0.006-((autoAnim_1-autoAnim_2)*0.003)));
+        gcol = HSV2RGB(vec3(0.0, 0.4, 0.005-((autoAnim_1-autoAnim_2)*0.004)));
     // Triangle resize
         p_tri_you *= 1.0;
     // Triangle y offset
@@ -1298,8 +1298,8 @@
 
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_you(p_you_text, vec2(1.7, -0.03)) * (1.0 - (autoAnim_3-autoAnim_8)));
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_party_a(p_you_text, vec2(2.1, -0.03)) * (autoAnim_3-autoAnim_8));
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_intent_a(p_you_text, vec2(1.97 - (sin(autoAnim_6 * 3.142)) * 1.3, -0.25)) * (autoAnim_2 - autoAnim_6));
-        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_long(p_you_text, vec2(1.91 - (sin(autoAnim_6 * 3.142)) * 1.3, -0.25)) * (autoAnim_6 - autoAnim_8));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_intent_a(p_you_text, vec2(1.97 - (sin(autoAnim_6 * 3.142)) * 1.0, -0.25)) * (autoAnim_2 - autoAnim_6));
+        col = mix(col, HSV2RGB(vec3(0.0, 0.0, 1.0)), draw_text_btc_long(p_you_text, vec2(1.91 - (sin(autoAnim_6 * 3.142)) * 1.0, -0.25)) * (autoAnim_6 - autoAnim_8));
         col = mix(col, HSV2RGB(vec3(0.0, 0.0, 0.7)), draw_text_plus_onethousand(p_you_text, vec2(1.78, -0.55)) * (autoAnim_7 - autoAnim_8));
 
         return mix(col,inputCol,1.0-(introAnim-outroAnim));
@@ -1568,14 +1568,14 @@
             // -------------------Small screen mode
         } else {
             // Camera location right - left
-            ro = 1.0 * vec3(7.0-(iClick*7.0),
+            ro = 1.0 * vec3(0.0,
             //Camera location up - down
             0.5+ ((iAnimProgress_2.z * 3.0)*(1.0-iAnimProgress_1.x)),
             //Camera location forth - back
             -12.0 +iAnimProgress_1.y*4.0- iAnimProgress_1.z * 1.0 + iAnimProgress_2.x * 8.8
             );
             // Camera look right - left
-            la = vec3(7.0-(iClick*7.0) -iAnimProgress_1.y*1.0+iAnimProgress_1.z*1.0+iAnimProgress_2.x*1.0-iAnimProgress_2.y*1.0,
+            la = vec3(0.0,
             // Camrea look up - down
             4.0-iAnimProgress_1.y*1.2 + iAnimProgress_1.y * 0.9- iAnimProgress_1.z * 1.0 - iAnimProgress_2.x * 2.0,
             // Camrea look forth - back

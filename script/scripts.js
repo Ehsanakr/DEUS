@@ -142,7 +142,6 @@ function animCounter() {
     resetCounter();
   }
 }
-
 // Function to update colors based on the counter value
 function updateColors() {
   const colorList = document.getElementById("colorList");
@@ -280,15 +279,17 @@ $('a[href^="#"]').on("click", function (event) {
 //---SCROLLIFY---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 //---SCROLLFUNCTIONS---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
+$("#reachus").addClass("disabled");
 $(window).scroll(function () {
   //scroll down icon invertion
   const scrollDownElement = document.querySelector(".scrollDown-wrapper");
   const sectionFive = document.querySelector(".sectionWrap.five").offsetTop;
   if (window.scrollY == sectionFive) {
     scrollDownElement.style.transform = `scaleY(-1)`;
+    $("#reachus").removeClass("disabled");
   } else {
     scrollDownElement.style.transform = `scaleY(1)`;
+    $("#reachus").addClass("disabled");
   }
 
   //scrollbar style
