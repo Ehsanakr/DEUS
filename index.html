@@ -1260,7 +1260,7 @@
         vec2 p_hedger_text = p_tri_hedger;
 
     // Triangle glow color
-        gcol = HSV2RGB(vec3(0.0, 0.9, 0.005-((autoAnim_1-autoAnim_4)*0.004)));
+        gcol = HSV2RGB(vec3(0.0, 0.9, 0.009-((autoAnim_1-autoAnim_4)*0.008)));
     // Triangle resize
         p_tri_hedger *= 1.0;
     // Triangle y offset
@@ -1577,7 +1577,7 @@
             // Camera look right - left
             la = vec3(0.0,
             // Camrea look up - down
-            4.0-iAnimProgress_1.y*1.2 + iAnimProgress_1.y * 0.9- iAnimProgress_1.z * 1.0 - iAnimProgress_2.x * 2.0,
+            4.0-iAnimProgress_1.y*2.1- iAnimProgress_1.z * 1.0 - iAnimProgress_2.x * 2.0,
             // Camrea look forth - back
             0.0+ iAnimProgress_2.x * 20.3);
         };
