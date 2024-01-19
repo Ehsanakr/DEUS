@@ -31,7 +31,11 @@ section {
 
 .inquire {
     margin-top: 10em;
+<<<<<<< HEAD
     background-color: #1b1b1bf6;
+=======
+    background-color: #1f1f1fd6;
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
     border: solid 1px var(--red);
 }
 
@@ -70,7 +74,11 @@ section {
 
 .frontSectionCard {
     height: 3em;
+<<<<<<< HEAD
     background: #1b1b1bf6;
+=======
+    background: #1f1f1fd6;
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
     padding: 1em 1em;
     position: relative;
     justify-content: left;
@@ -210,7 +218,11 @@ a {
 }
 
 .accordion-block {
+<<<<<<< HEAD
     background-color: #1b1b1bf6;
+=======
+    background-color: #1f1f1fd6;
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
     margin-bottom: 20px;
 }
 
@@ -232,7 +244,11 @@ a {
     align-items: center;
     width: 100%;
     padding: 8px 10px;
+<<<<<<< HEAD
     background: #1b1b1bf6;
+=======
+    background: #1f1f1fd6;
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
     color: #ffffff !important;
     border: solid 1px var(--red);
     margin: 0;
@@ -346,8 +362,11 @@ a {
     z-index: 8;
     right: 0;
     width: 100%;
+<<<<<<< HEAD
     margin-top: 0;
 
+=======
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
 }
 
 .navbar_wrapper {
@@ -356,7 +375,10 @@ a {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+<<<<<<< HEAD
     background-color: #1b1b1be2;
+=======
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
 }
 
 .navbar_col {
@@ -470,7 +492,11 @@ nav[role="custom-dropdown"] ul>li:hover {
     text-transform: uppercase;
     transition: all .2s ease-in-out;
     position: relative;
+<<<<<<< HEAD
     padding: 0.2em 1.05em 0.2em 1.45em;
+=======
+    padding: 0.2em 0.75em 0.2em 1em;
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
     appearance: none;
     cursor: pointer;
     border: solid 1px;
@@ -609,7 +635,10 @@ nav[role="custom-dropdown"] ul>li:hover {
         z-index: 8;
         right: 0;
         width: 100%;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
     }
 
     .navbar_col {
@@ -639,7 +668,14 @@ nav[role="custom-dropdown"] ul>li:hover {
         font-size: 2em;
     }
 
+<<<<<<< HEAD
 
+=======
+    .tradeBtn2.active {
+        margin: 0 0 0 0.3em;
+        font-size: 2em;
+    }
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
 
     /* Menu styles */
     .menu__list {

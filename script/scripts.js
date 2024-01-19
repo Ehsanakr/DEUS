@@ -1,4 +1,4 @@
-//////////////////////////////THREE.JS(core)
+//---THREE.JS---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 let camera, scene, renderer, uniforms, scrollProgress;
 
 init();
@@ -14,14 +14,13 @@ function init() {
   const geometry = new THREE.PlaneGeometry(2, 2);
 
   uniforms = {
+    iAnimTimer: { value: 0.0 },
     iClick: { value: 1.0 },
     iTime: { value: 1.0 },
     iResolution: { type: "v2", value: new THREE.Vector2() },
     iMousePos: { type: "v2", value: new THREE.Vector2() },
     iAnimProgress_1: { type: "v3", value: new THREE.Vector3() },
     iAnimProgress_2: { type: "v3", value: new THREE.Vector3() },
-    iAnimProgress_3: { type: "v3", value: new THREE.Vector3() },
-    iAnimProgress_4: { type: "v3", value: new THREE.Vector3() },
   };
 
   const material = new THREE.ShaderMaterial({
@@ -53,8 +52,6 @@ function handleMouseMove(event) {
   uniforms.iMousePos.value.y = window.innerHeight - event.clientY;
 }
 
-//
-
 function animate() {
   requestAnimationFrame(animate);
 
@@ -69,16 +66,51 @@ function animate() {
 
   renderer.render(scene, camera);
 }
+//---THREE.JS---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
-// Create a timeline for the intro animation
-const introTimeline = gsap.timeline();
+//---GSAP---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+let counter = 0;
+let counterInterval = null;
 
+<<<<<<< HEAD
 // Add an initial state for iAnimProgress_4.z
 introTimeline.from(uniforms.iAnimProgress_2.value, {
   z: 2, // Set the initial value
   duration: 3.0, // Adjust the duration as needed
 });
+=======
+// Start counting function
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
 
+// Start counting function
+function startCounter() {
+  counterInterval = setInterval(() => {
+    if (counter <= 400) {
+      counter += 1;
+
+      // Update colors based on the counter value
+      updateColors();
+
+      uniforms.iAnimTimer.value = counter;
+    } else {
+      // Reset the counter to 0 when it reaches 500
+      counter = 0;
+
+      uniforms.iAnimTimer.value = counter;
+    }
+  }, 50); // Adjust the interval duration as needed
+}
+
+// Reset and stop counting function
+function resetCounter() {
+  clearInterval(counterInterval); // Stop the counter interval
+  counterInterval = null; // Set counterInterval to null
+  counter = 0; // Reset the counter to 0
+
+  // Reset colors to the initial state
+  updateColors();
+}
+// Check conditions using ScrollTrigger
 gsap.to(uniforms.iAnimProgress_1.value, {
   x: 1,
   scrollTrigger: {
@@ -86,8 +118,10 @@ gsap.to(uniforms.iAnimProgress_1.value, {
     start: "0%",
     end: "100%",
     scrub: true,
+    onUpdate: animCounter,
   },
 });
+
 gsap.to(uniforms.iAnimProgress_1.value, {
   y: 1,
   scrollTrigger: {
@@ -95,8 +129,53 @@ gsap.to(uniforms.iAnimProgress_1.value, {
     start: "0%",
     end: "100%",
     scrub: true,
+    onUpdate: animCounter,
   },
 });
+
+// Function to check conditions and start/stop counting
+// Function to check conditions and start/stop counting
+function animCounter() {
+  // Check if iAnimProgress_1.x is more than 0.1 and iAnimProgress_1.y is less than 0.9
+  if (
+    uniforms.iAnimProgress_1.value.x > 0.1 &&
+    uniforms.iAnimProgress_1.value.y < 0.9
+  ) {
+    // Start counting if not already counting
+    if (!counterInterval) {
+      startCounter();
+    }
+  } else {
+    // Reset and stop counting if conditions are not met
+    resetCounter();
+  }
+}
+// Function to update colors based on the counter value
+function updateColors() {
+  const colorList = document.getElementById("colorList");
+  const items = colorList.getElementsByTagName("li");
+
+  // Reset all items to blue
+  for (let i = 0; i < items.length; i++) {
+    items[i].className = "blue";
+  }
+
+  // Update colors based on the counter value
+  if (counter >= 50 && counter < 100) {
+    items[0].className = "red";
+  } else if (counter >= 100 && counter < 150) {
+    items[1].className = "red";
+  } else if (counter >= 150 && counter < 200) {
+    items[2].className = "red";
+  } else if (counter >= 200 && counter < 250) {
+    items[3].className = "red";
+  } else if (counter >= 250 && counter < 300) {
+    items[4].className = "red";
+  } else if (counter >= 300 && counter <= 350) {
+    items[5].className = "red";
+  }
+}
+
 gsap.to(uniforms.iAnimProgress_1.value, {
   z: 1,
   scrollTrigger: {
@@ -106,6 +185,7 @@ gsap.to(uniforms.iAnimProgress_1.value, {
     scrub: true,
   },
 });
+
 gsap.to(uniforms.iAnimProgress_2.value, {
   x: 1,
   scrollTrigger: {
@@ -115,13 +195,38 @@ gsap.to(uniforms.iAnimProgress_2.value, {
     scrub: true,
   },
 });
+<<<<<<< HEAD
 
 //***********     Other functions     ***********//
+=======
+gsap.to(uniforms.iAnimProgress_2.value, {
+  y: 1,
+  scrollTrigger: {
+    trigger: ".sectionWrap.five",
+    start: "0%",
+    end: "100%",
+    scrub: true,
+  },
+});
+
+// Intro animation timeline
+const introTimeline = gsap.timeline();
+introTimeline.from(uniforms.iAnimProgress_2.value, {
+  z: 2,
+  duration: 3.0,
+});
+//---GSAP---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+//---SCROLLIFY---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
 
 // Initialize Scrollify with mandatory snap scrolling
 $.scrollify({
   section: "section",
+<<<<<<< HEAD
   scrollSpeed: 300,
+=======
+  scrollSpeed: 2000,
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
   scrollbars: false,
   setHeights: false,
   snap: true,
@@ -129,6 +234,7 @@ $.scrollify({
   easing: "easeOutSine",
 });
 
+<<<<<<< HEAD
 
 /* accordion */
 function triggerAccordion() {
@@ -182,6 +288,8 @@ $(document).ready(function () {
     $(aId + " .panel-collapse.in").collapse("hide");
   };
 });
+=======
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
 // scroll to the first section on refresh
 $(document).ready(function () {
   $.scrollify.move("#1");
@@ -200,7 +308,11 @@ $("#scrollDownID").on(
   "click",
   debounce(function () {
     if (
+<<<<<<< HEAD
       window.scrollY == document.querySelector(".sectionWrap.four").offsetTop
+=======
+      window.scrollY == document.querySelector(".sectionWrap.five").offsetTop
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
     ) {
       $.scrollify.move("#1");
     } else {
@@ -241,16 +353,25 @@ $('a[href^="#"]').on("click", function (event) {
     $.scrollify.move(index);
   }
 });
-// ******************** scroll functions ********************
+//---SCROLLIFY---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
+//---SCROLLFUNCTIONS---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+$("#reachus").addClass("disabled");
 $(window).scroll(function () {
   //scroll down icon invertion
   const scrollDownElement = document.querySelector(".scrollDown-wrapper");
+<<<<<<< HEAD
   const lastSection = document.querySelector(".sectionWrap.four").offsetTop;
   if (window.scrollY == lastSection) {
+=======
+  const sectionFive = document.querySelector(".sectionWrap.five").offsetTop;
+  if (window.scrollY == sectionFive) {
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
     scrollDownElement.style.transform = `scaleY(-1)`;
+    $("#reachus").removeClass("disabled");
   } else {
     scrollDownElement.style.transform = `scaleY(1)`;
+    $("#reachus").addClass("disabled");
   }
 
   //scrollbar style
@@ -261,19 +382,24 @@ $(window).scroll(function () {
   $("#progressbar").css("height", scrollPercent + "px");
 
   //caption text visibility
-  const toggleSwitch = document.querySelector(".minimal-switch");
-  const captionElement = document.querySelector(".captionMain");
+  const sections = document.querySelectorAll(".sectionWrap");
+  const texts = document.querySelectorAll(".box__text");
 
-  var scrollThreshold = window.innerHeight * 0.2;
+  sections.forEach((section, index) => {
+    const rect = section.getBoundingClientRect();
+    const isVisible =
+      rect.top <= window.innerHeight / 2 &&
+      rect.bottom >= window.innerHeight / 2;
+    if (isVisible) {
+      const opacity =
+        1 - Math.max(0, Math.min(1, Math.abs(rect.top) / window.innerHeight));
+      texts[index].style.opacity = opacity;
+    } else {
+      texts[index].style.opacity = 0;
+    }
+  });
+
   const scrollPosition = $(this).scrollTop();
-  if (scrollPosition >= scrollThreshold) {
-    captionElement.style.opacity = 0.0;
-    toggleSwitch.style.opacity = 0.0;
-  } else {
-    toggleSwitch.style.opacity = 1.0;
-    captionElement.style.opacity = 1.0;
-  }
-
   // Highlight current section in menu on scroll
   $("section").each(function () {
     var sectionTop = $(this).offset().top;
@@ -292,8 +418,9 @@ $(window).scroll(function () {
     }
   });
 });
+//---SCROLLFUNCTIONS---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
-// ******************** changing word ********************
+//---ROLLDOWNTEXT---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 const changingWords = [
   "CRYPTOS",
@@ -338,6 +465,7 @@ updateChangingWord();
 
 // Set up a timer to change the word at intervals
 setInterval(updateChangingWord, 3000); // Change the word every 3 seconds, adjust as needed
+<<<<<<< HEAD
 
 //***********     text gsap     ***********//
 
@@ -439,3 +567,6 @@ content.forEach((item, i, arr) => {
     timeline.yoyo(true).repeat(1).repeatDelay(0.5);
   }
 });
+=======
+//---ROLLDOWNTEXT---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+>>>>>>> 0942ce9707f3f85e7c044b7c6899b549612c9a13
