@@ -18,6 +18,7 @@ function init() {
     iTime: { value: 1.0 },
     iResolution: { type: "v2", value: new THREE.Vector2() },
     iMousePos: { type: "v2", value: new THREE.Vector2() },
+    iAnimProgress_0: { type: "v3", value: new THREE.Vector3() },
     iAnimProgress_1: { type: "v3", value: new THREE.Vector3() },
     iAnimProgress_2: { type: "v3", value: new THREE.Vector3() },
     iAnimProgress_3: { type: "v3", value: new THREE.Vector3() },
@@ -78,7 +79,15 @@ introTimeline.from(uniforms.iAnimProgress_4.value, {
   z: 2, // Set the initial value
   duration: 3.0, // Adjust the duration as needed
 });
-
+gsap.to(uniforms.iAnimProgress_0.value, {
+  z: 1,
+  scrollTrigger: {
+    trigger: ".sectionWrap.zero",
+    start: "0%",
+    end: "100%",
+    scrub: true,
+  },
+});
 gsap.to(uniforms.iAnimProgress_1.value, {
   x: 1,
   scrollTrigger: {
@@ -143,79 +152,85 @@ gsap.to(uniforms.iAnimProgress_3.value, {
     scrub: true,
   },
 });
-
-
+gsap.to(uniforms.iAnimProgress_3.value, {
+  y: 1,
+  scrollTrigger: {
+    trigger: ".sectionWrap.eight",
+    start: "0%",
+    end: "100%",
+    scrub: true,
+  },
+});
+gsap.to(uniforms.iAnimProgress_3.value, {
+  z: 1,
+  scrollTrigger: {
+    trigger: ".sectionWrap.nine",
+    start: "0%",
+    end: "100%",
+    scrub: true,
+  },
+});
 
 //***********     Other functions     ***********//
 
 // Initialize Scrollify with mandatory snap scrolling
 $.scrollify({
   section: "section",
-  scrollSpeed: 300,
+  scrollSpeed: 900,
   scrollbars: false,
   setHeights: false,
   snap: true,
   scrollSnapOffset: 0,
-  easing: "easeOutSine",
+  easing: "easeInSine",
 });
 
-
-/* accordion */
-function triggerAccordion() {
-  $(".js-accordion__trigger").on("click", (e) => {
-    let target = $(e.currentTarget);
-    let expanded = target.attr("aria-expanded") === "true" || false;
-    let targetContent = target
-      .closest(".js-accordion")
-      .find(".js-accordion__content");
-
-    /* collapse all accordion contents */
-    $(".js-accordion__trigger").attr("aria-expanded", "false");
-    $(".js-accordion__content").attr("aria-hidden", "true").slideUp(700);
-
-    /* toggle the target accordion block */
-    target.attr("aria-expanded", !expanded);
-    targetContent.attr("aria-hidden", expanded);
-
-    let targetContentShown =
-      targetContent.attr("aria-hidden") === "true" || false;
-
-    targetContentShown
-      ? targetContent.slideUp(700)
-      : targetContent.slideDown(700);
-  });
-}
-
-/* init accordion logic if it exists on the page */
-$(".js-accordion") ? triggerAccordion() : false;
-
-$(document).ready(function () {
-  $(".toggle-accordion").on("click", function () {
-    var accordionId = $(this).attr("accordion-id"),
-      numPanelOpen = $(accordionId + " .collapse.in").length;
-
-    $(this).toggleClass("active");
-
-    if (numPanelOpen == 0) {
-      openAllPanels(accordionId);
-    } else {
-      closeAllPanels(accordionId);
-    }
-  });
-
-  openAllPanels = function (aId) {
-    console.log("setAllPanelOpen");
-    $(aId + ' .panel-collapse:not(".in")').collapse("show");
-  };
-  closeAllPanels = function (aId) {
-    console.log("setAllPanelclose");
-    $(aId + " .panel-collapse.in").collapse("hide");
-  };
-});
 // scroll to the first section on refresh
 $(document).ready(function () {
   $.scrollify.move("#1");
 });
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+
+  const progress = document.querySelector(".progress");
+  const container = document.querySelector(".container");
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+
+  function setScrollPerc() {
+    const top = window.pageYOffset || document.documentElement.scrollTop;
+    const perc = Math.ceil((top * 50) / docHeight);
+    container.setAttribute("data-scroll", perc);
+    progress.style.strokeDashoffset = 264 - (perc / 100) * 264;
+  }
+
+  window.addEventListener("scroll", setScrollPerc);
+});
+
+///////////////////////////////// Initialize scrollButton
+const playToggle = document.querySelector(".control");
+const section4 = document.querySelector(".sectionWrap.nine"); // replace with the actual ID of section 4
+
+playToggle.addEventListener("click", function () {
+  playToggle.classList.toggle("play");
+  playToggle.classList.toggle("pause");
+
+  if (playToggle.classList.contains("play")) {
+    // Stop auto-scrolling, scroll to top, and restart auto-scrolling
+    clearInterval(autoScrollInterval);
+  } else {
+    // Start auto-scrolling
+    autoScroll();
+  }
+});
+
+// Function to auto-scroll continuously
+let autoScrollInterval;
+
+function autoScroll() {
+  autoScrollInterval = setInterval(() => {
+    // Assuming $.scrollify.next() is a valid function for your use case
+    $.scrollify.next();
+  }, 2000); // Change the interval as needed (2000 milliseconds = 2 seconds)
+}
 
 // Dark/Light mode function
 const toggleSwitch = document.getElementById("toggleSwitch");
@@ -230,7 +245,7 @@ $("#scrollDownID").on(
   "click",
   debounce(function () {
     if (
-      window.scrollY == document.querySelector(".sectionWrap.seven").offsetTop
+      window.scrollY == document.querySelector(".sectionWrap.nine").offsetTop
     ) {
       $.scrollify.move("#1");
     } else {
@@ -272,14 +287,241 @@ $('a[href^="#"]').on("click", function (event) {
   }
 });
 // ******************** scroll functions ********************
-
-$(window).scroll(function () {
-  //scroll down icon invertion
-  const scrollDownElement = document.querySelector(".scrollDown-wrapper");
-  const sectionEleven = document.querySelector(".sectionWrap.seven").offsetTop;
-  if (window.scrollY == sectionEleven) {
-    scrollDownElement.style.transform = `scaleY(-1)`;
+const mainTitle = document.getElementById("mainTitle");
+// Add click event listeners to the checkboxes
+mainTitle.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#1");
+});
+const listTitle1 = document.getElementById("listTitle1");
+// Add click event listeners to the checkboxes
+listTitle1.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  const sectionTwo = document.querySelector(".sectionWrap.one").offsetTop;
+  if (window.scrollY == sectionTwo) {
+    $.scrollify.move("#1");
   } else {
+    $.scrollify.move("#2");
+  }
+});
+
+const listTitle2 = document.getElementById("listTitle2");
+// Add click event listeners to the checkboxes
+listTitle2.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  const sectionTwo = document.querySelector(".sectionWrap.eight").offsetTop;
+  if (window.scrollY == sectionTwo) {
+    $.scrollify.move("#1");
+  } else {
+    $.scrollify.move("#9");
+  }
+});
+const listTitle3 = document.getElementById("listTitle3");
+// Add click event listeners to the checkboxes
+listTitle3.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  const sectionTwo = document.querySelector(".sectionWrap.nine").offsetTop;
+  if (window.scrollY == sectionTwo) {
+    $.scrollify.move("#1");
+  } else {
+    $.scrollify.move("#10");
+  }
+});
+const listItem1 = document.getElementById("listItem1");
+const listItem2 = document.getElementById("listItem2");
+const listItem3 = document.getElementById("listItem3");
+const listItem4 = document.getElementById("listItem4");
+const listItem5 = document.getElementById("listItem5");
+const listItem6 = document.getElementById("listItem6");
+
+// Add click event listeners to the checkboxes
+listItem1.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#3");
+});
+// Add click event listeners to the checkboxes
+listItem2.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#4");
+});
+// Add click event listeners to the checkboxes
+listItem3.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#5");
+});
+// Add click event listeners to the checkboxes
+listItem4.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#6");
+});
+// Add click event listeners to the checkboxes
+listItem5.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#7");
+});
+// Add click event listeners to the checkboxes
+listItem6.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#8");
+});
+const checkBox1 = document.getElementById("toggle1");
+const checkBox2 = document.getElementById("toggle2");
+const checkBox3 = document.getElementById("toggle3");
+// Add click event listeners to the checkboxes
+checkBox1.addEventListener("click", function (event) {
+  console.log("clicked");
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#3");
+});
+// Add click event listeners to the checkboxes
+checkBox1.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#2");
+});
+// Add click event listeners to the checkboxes
+checkBox2.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#9");
+});
+// Add click event listeners to the checkboxes
+checkBox3.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default checkbox behavior
+  $.scrollify.move("#10");
+});
+$(window).scroll(function () {
+  // Get the scroll position
+  const scrollPosition = $(window).scrollTop();
+
+  //ZERO  - section functions based on current section
+  const scrollColorElementZero = document.querySelector(".list-item0");
+  const scrollColorElementOne = document.querySelector(".list-title1");
+
+  const sectionZero = document.querySelector(".sectionWrap.zero").offsetTop;
+  if (window.scrollY == sectionZero) {
+    checkBox1.checked = true; // Collapse the checkbox
+    checkBox2.checked = true; // Collapse the checkbox
+    checkBox3.checked = true; // Collapse the checkbox
+    scrollColorElementOne.classList.remove("red");
+  } else {
+  }
+
+  //ONE  - section functions based on current section
+  const sectionOne = document.querySelector(".sectionWrap.one").offsetTop;
+  if (window.scrollY == sectionOne) {
+    scrollColorElementOne.classList.add("red");
+    checkBox1.checked = false; // Expand the checkbox
+    checkBox2.checked = true; // Collapse the checkbox
+    checkBox3.checked = true; // Collapse the checkbox
+  } else {
+  }
+  //TWO  - section functions based on current section
+  const scrollColorElementTwo = document.querySelector(".list-item1");
+  const sectionTwo = document.querySelector(".sectionWrap.two").offsetTop;
+  if (window.scrollY == sectionTwo) {
+    scrollColorElementOne.classList.add("red");
+    scrollColorElementTwo.classList.add("pink");
+    checkBox1.checked = false; // Expand the checkbox
+    checkBox2.checked = true; // Collapse the checkbox
+    checkBox3.checked = true; // Collapse the checkbox
+  } else {
+    scrollColorElementTwo.classList.remove("pink");
+  }
+  //THREE  - section functions based on current section
+  const scrollColorElementThree = document.querySelector(".list-item2");
+  const sectionThree = document.querySelector(".sectionWrap.three").offsetTop;
+  if (window.scrollY == sectionThree) {
+    checkBox1.checked = false; // Expand the checkbox
+    checkBox2.checked = true; // Collapse the checkbox
+    checkBox3.checked = true; // Collapse the checkbox
+
+    scrollColorElementOne.classList.add("red");
+    scrollColorElementThree.classList.add("pink");
+  } else {
+    scrollColorElementThree.classList.remove("pink");
+  }
+  //FOUR  - section functions based on current section
+  const scrollColorElementFour = document.querySelector(".list-item3");
+  const sectionFour = document.querySelector(".sectionWrap.four").offsetTop;
+  if (window.scrollY == sectionFour) {
+    checkBox1.checked = false; // Expand the checkbox
+    checkBox2.checked = true; // Collapse the checkbox
+    checkBox3.checked = true; // Collapse the checkbox
+
+    scrollColorElementOne.classList.add("red");
+    scrollColorElementFour.classList.add("pink");
+  } else {
+    scrollColorElementFour.classList.remove("pink");
+  }
+  //FIVE  - section functions based on current section
+  const scrollColorElementFive = document.querySelector(".list-item4");
+  const sectionFive = document.querySelector(".sectionWrap.five").offsetTop;
+  if (window.scrollY == sectionFive) {
+    scrollColorElementOne.classList.add("red");
+    scrollColorElementFive.classList.add("pink");
+    checkBox1.checked = false; // Expand the checkbox
+    checkBox2.checked = true; // Collapse the checkbox
+    checkBox3.checked = true; // Collapse the checkbox
+  } else {
+    scrollColorElementFive.classList.remove("pink");
+  }
+  //SIX  - section functions based on current section
+  const scrollColorElementSix = document.querySelector(".list-item5");
+  const sectionSix = document.querySelector(".sectionWrap.six").offsetTop;
+  if (window.scrollY == sectionSix) {
+    scrollColorElementOne.classList.add("red");
+    scrollColorElementSix.classList.add("pink");
+    checkBox1.checked = false; // Expand the checkbox
+    checkBox2.checked = true; // Collapse the checkbox
+    checkBox3.checked = true; // Collapse the checkbox
+  } else {
+    scrollColorElementSix.classList.remove("pink");
+  }
+  //SEVEN  - section functions based on current section
+  const scrollColorElementSeven = document.querySelector(".list-item6");
+  const sectionSeven = document.querySelector(".sectionWrap.seven").offsetTop;
+  if (window.scrollY == sectionSeven) {
+    scrollColorElementOne.classList.add("red");
+    scrollColorElementSeven.classList.add("pink");
+    checkBox1.checked = false; // Expand the checkbox
+    checkBox2.checked = true; // Collapse the checkbox
+    checkBox3.checked = true; // Collapse the checkbox
+  } else {
+    scrollColorElementSeven.classList.remove("pink");
+  }
+  //EIGHT  - section functions based on current section
+  const scrollColorElementEight = document.querySelector(".list-title2");
+  const sectionEight = document.querySelector(".sectionWrap.eight").offsetTop;
+  if (window.scrollY == sectionEight) {
+    scrollColorElementOne.classList.remove("red");
+    scrollColorElementEight.classList.add("red");
+    checkBox1.checked = true; // Collapse the checkbox
+    checkBox2.checked = false; // Expand the checkbox
+    checkBox3.checked = true; // Collapse the checkbox
+  } else {
+    scrollColorElementEight.classList.remove("red");
+  }
+  //scroll down icon selector
+  const scrollDownElement = document.querySelector(".scrollDown-wrapper");
+  //NINE  - section functions based on current section
+  const scrollColorElementNine = document.querySelector(".list-title3");
+  const sectionNine = document.querySelector(".sectionWrap.nine").offsetTop;
+  if (window.scrollY == sectionNine) {
+    scrollColorElementOne.classList.remove("red");
+    scrollColorElementNine.classList.add("red");
+    scrollDownElement.style.transform = `scaleY(-1)`;
+    checkBox1.checked = true; // Collapse the checkbox
+    checkBox2.checked = true; // Collapse the checkbox
+    checkBox3.checked = false; // Expand the checkbox
+    playToggle.classList.remove("pause");
+    playToggle.classList.add("play");
+    clearInterval(autoScrollInterval);
+    playToggle.addEventListener("click", function () {
+  if (window.scrollY == sectionNine) {
+        $.scrollify.move("#1");
+  }
+    });
+  } else {
+    scrollColorElementNine.classList.remove("red");
     scrollDownElement.style.transform = `scaleY(1)`;
   }
 
@@ -294,7 +536,6 @@ $(window).scroll(function () {
   const toggleSwitch = document.querySelector(".minimal-switch");
 
   var scrollThreshold = window.innerHeight * 0.2;
-  const scrollPosition = $(this).scrollTop();
   if (scrollPosition >= scrollThreshold) {
     toggleSwitch.style.opacity = 0.0;
   } else {
@@ -318,179 +559,4 @@ $(window).scroll(function () {
         .addClass("menu__item--current");
     }
   });
-});
-
-//***********     text gsap     ***********//
-
-// Set up content scroll triggers
-gsap.registerPlugin(ScrollTrigger);
-
-const content = [
-  
-  {
-    titleSYMM: "",
-    title: "",
-    subtitle: "",
-    list_top:
-      "<span class= head-span>HOW TO TRADE DERIVATIVES<br>with INTENTs using SYMMIO.</span> " +
-      "</br></br>" +
-      " <span>• FORMULATE your INTENT via 3rd party frontend</span></br>" +
-      " <span>• SEND your INTENT to the pool</span></br>" +
-      " <span>• Counterparties (Hedgers) SEE your INTENT in the pool</span></br>" +
-      " <span>• Counterparty (Hedger) CLAIMs your intent</span></br>" +
-      " <span>• Claimed INTENTs CREATE a trade</span></br>" +
-      " <span>• Both parties LOCK collateral</span>",
-
-    selector: ".sectionWrap.one",
-  },
-  {
-    titleSYMM: "",
-    title: "",
-    subtitle: "",
-    list_top:
-      "<span class= head-span>HOW TO TRADE DERIVATIVES<br>with INTENTs using SYMMIO.</span> " +
-      "</br></br>" +
-      " <span class=active-span>• FORMULATE your INTENT via 3rd party frontend</span></br>" +
-      " <span>• SEND your INTENT to the pool</span></br>" +
-      " <span>• Counterparties (Hedgers) SEE your INTENT in the pool</span></br>" +
-      " <span>• Counterparty (Hedger) CLAIMs your intent</span></br>" +
-      " <span>• Claimed INTENTs CREATE a trade</span></br>" +
-      " <span>• Both parties LOCK collateral</span>",
-
-    selector: ".sectionWrap.two",
-  },
-  {
-    titleSYMM: "",
-    title: "",
-    subtitle: "",
-    list_top:
-      "<span class= head-span>HOW TO TRADE DERIVATIVES<br>with INTENTs using SYMMIO.</span> " +
-      "</br></br>" +
-      " <span>• FORMULATE your INTENT via 3rd party frontend</span></br>" +
-      " <span class=active-span>• SEND your INTENT to the pool</span></br>" +
-      " <span>• Counterparties (Hedgers) SEE your INTENT in the pool</span></br>" +
-      " <span>• Counterparty (Hedger) CLAIMs your intent</span></br>" +
-      " <span>• Claimed INTENTs CREATE a trade</span></br>" +
-      " <span>• Both parties LOCK collateral</span>",
-
-    selector: ".sectionWrap.three",
-  },
-  {
-    titleSYMM: "",
-    title: "",
-    subtitle: "",
-    list_top:
-      "<span class= head-span>HOW TO TRADE DERIVATIVES<br>with INTENTs using SYMMIO.</span> " +
-      "</br></br>" +
-      " <span>• FORMULATE your INTENT via 3rd party frontend</span></br>" +
-      " <span>• SEND your INTENT to the pool</span></br>" +
-      " <span class=active-span>• Counterparties (Hedgers) SEE your INTENT in the pool</span></br>" +
-      " <span>• Counterparty (Hedger) CLAIMs your intent</span></br>" +
-      " <span>• Claimed INTENTs CREATE a trade</span></br>" +
-      " <span>• Both parties LOCK collateral</span>",
-
-    selector: ".sectionWrap.four",
-  },
-  {
-    titleSYMM: "",
-    title: "",
-    subtitle: "",
-    list_top:
-      "<span class= head-span>HOW TO TRADE DERIVATIVES<br>with INTENTs using SYMMIO.</span> " +
-      "</br></br>" +
-      " <span>• FORMULATE your INTENT via 3rd party frontend</span></br>" +
-      " <span>• SEND your INTENT to the pool</span></br>" +
-      " <span>• Counterparties (Hedgers) SEE your INTENT in the pool</span></br>" +
-      " <span class=active-span>• Counterparty (Hedger) CLAIMs your intent</span></br>" +
-      " <span>• Claimed INTENTs CREATE a trade</span></br>" +
-      " <span>• Both parties LOCK collateral</span>",
-
-    selector: ".sectionWrap.five",
-  },
-  {
-    titleSYMM: "",
-    title: "",
-    subtitle: "",
-    list_top:
-      "<span class= head-span>HOW TO TRADE DERIVATIVES<br>with INTENTs using SYMMIO.</span> " +
-      "</br></br>" +
-      " <span>• FORMULATE your INTENT via 3rd party frontend</span></br>" +
-      " <span>• SEND your INTENT to the pool</span></br>" +
-      " <span>• Counterparties (Hedgers) SEE your INTENT in the pool</span></br>" +
-      " <span>• Counterparty (Hedger) CLAIMs your intent</span></br>" +
-      " <span class=active-span>• Claimed INTENTs CREATE a trade</span></br>" +
-      " <span>• Both parties LOCK collateral</span>",
-
-    selector: ".sectionWrap.six",
-  },
-  {
-    titleSYMM: "",
-    title: "",
-    subtitle: "",
-    list_top:
-      "<span class= head-span>HOW TO TRADE DERIVATIVES<br>with INTENTs using SYMMIO.</span> " +
-      "</br></br>" +
-      " <span>• FORMULATE your INTENT via 3rd party frontend</span></br>" +
-      " <span>• SEND your INTENT to the pool</span></br>" +
-      " <span>• Counterparties (Hedgers) SEE your INTENT in the pool</span></br>" +
-      " <span>• Counterparty (Hedger) CLAIMs your intent</span></br>" +
-      " <span>• Claimed INTENTs CREATE a trade</span></br>" +
-      " <span class=active-span>• Both parties LOCK collateral</span>",
-
-    selector: ".sectionWrap.seven",
-  },
-
-];
-
-content.forEach((item, i, arr) => {
-  const onUpdate = function () {
-    const time = this.time();
-    const duration = this.duration();
-
-    if (time >= duration || time <= 0) {
-      return;
-    }
-  };
-  // Create a timeline for the intro animation
-  const introTimeline = gsap.timeline();
-
-  // Add fade-in animation for the titles, subtitles, and other elements
-  introTimeline.from(
-    `${item.selector} .box__text`,
-    { opacity: 0, duration: 5 },
-    0
-  );
-
-  const timeline = new gsap.timeline({
-    scrollTrigger: {
-      trigger: item.selector,
-      scrub: true,
-      start: "top 75%",
-      end: `bottom ${i < arr.length - 1 ? "75%" : "bottom"}`,
-    },
-  })
-    .to(
-      `${item.selector} .title`,
-      { text: `${item.title}`, ease: "linear", duration: 0.2, onUpdate },
-      0
-    )
-    .to(
-      `${item.selector} .titleSYMM`,
-      { text: `${item.titleSYMM}`, ease: "linear", duration: 0.2, onUpdate },
-      0
-    )
-    .to(
-      `${item.selector} .subtitle`,
-      { text: `${item.subtitle}`, ease: "linear", duration: 0.2, onUpdate },
-      0
-    )
-    .to(
-      `${item.selector} .list_top`,
-      { text: `${item.list_top}`, ease: "linear", duration: 0, onUpdate },
-      0
-    );
-
-  if (i < arr.length - 1) {
-    timeline.yoyo(true).repeat(1).repeatDelay(0.5);
-  }
 });
