@@ -14,7 +14,6 @@ html {
     -moz-transition: filter 2s ease;
     /* For Firefox */
     -o-transition: filter 2s ease;
-    scroll-behavior: smooth;
     /* For Opera */
 }
 
@@ -32,7 +31,7 @@ section {
 
 .inquire {
     margin-top: 10em;
-    background-color: #1f1f1fd6;
+    background-color: #1f1f1feb;
     border: solid 1px var(--red);
 }
 
@@ -71,9 +70,7 @@ section {
 
 .frontSectionCard {
     height: 3em;
-    background: #1b1b1bf6;
-    background: #1b1b1bf6;
-    background: #1f1f1fd6;
+    background: #1f1f1feb;
     padding: 1em 1em;
     position: relative;
     justify-content: left;
@@ -213,7 +210,7 @@ a {
 }
 
 .accordion-block {
-    background-color: #1f1f1fd6;
+    background-color: #1f1f1feb;
     margin-bottom: 20px;
 }
 
@@ -235,9 +232,7 @@ a {
     align-items: center;
     width: 100%;
     padding: 8px 10px;
-    background: #1b1b1bf6;
-    background: #1b1b1bf6;
-    background: #1f1f1fd6;
+    background: #1f1f1feb;
     color: #ffffff !important;
     border: solid 1px var(--red);
     margin: 0;
@@ -313,7 +308,7 @@ a {
 #progressbar {
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     width: 3px;
     height: 100%;
     border-radius: 10px;
@@ -351,8 +346,6 @@ a {
     z-index: 8;
     right: 0;
     width: 100%;
-    margin-top: 0;
-    margin-top: 0;
 }
 
 .navbar_wrapper {
@@ -382,7 +375,8 @@ a {
     margin: 0.0em 2em 0em 0em;
 }
 
-
+/* Link and Reset button styles */
+nav[role="custom-dropdown"] ul>li>a,
 .menu__link {
     display: block;
     padding: .1em .5em;
@@ -394,6 +388,7 @@ a {
     position: relative;
     text-align: center;
     align-items: center;
+    color: var(--white);
     background: none;
     border: none;
     text-decoration: none;
@@ -401,103 +396,92 @@ a {
     transition: color 0.3s;
 }
 
-
-
-
-
-.tradeBtn {
-	letter-spacing: 0.5em;
-	text-decoration: none;
-	text-transform: uppercase;
-	transition: all .2s ease-in-out;
-	position: relative;
-	padding: 0.2em 0.75em 0.2em 1em;
-	appearance: none;
-	cursor: pointer;
-	border: solid 1px;
-	border-color: rgb(255, 92, 92);
-	color: #ffbaba;
+.menu__link:hover,
+.menu__link:focus,
+.reset:hover,
+.reset:focus,
+nav[role="custom-dropdown"] ul>li:hover {
+    outline: none;
+    color: var(--red);
 }
 
+/* Remove color change on :active state */
+.menu__link:active {
+    color: inherit;
+    /* Use the default text color */
+}
 
+.menu__item--current .menu__link {
+    color: #FFAAAA;
+
+}
+
+.menu__item--current .menu__link:before,
+.menu__item--current .menu__link:after {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.menu__link:before,
+.menu__link:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 0.0em;
+    opacity: 0;
+    border: solid var(--red);
+    transition: transform 0.3s, opacity 0.3s;
+    transition-timing-function: cubic-bezier(0.17, 0.67, 0.05, 1.29);
+}
+
+.menu__link:before {
+    top: 0;
+    left: 0;
+    border-width: 0 0 0 0.1em;
+    transform: translate3d(10px, 10px, 0);
+}
+
+.menu__link:after {
+    right: 0;
+    bottom: 0;
+    border-width: 0 0 0.1em 0;
+    transform: translate3d(-10px, -10px, 0);
+}
+
+/* Trade button styles */
+.trade-switch {
+    width: 20px;
+    height: 20px;
+}
+
+.trade-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.tradeBtn,
 .tradeBtn2 {
-	letter-spacing: 0.5em;
-	text-decoration: none;
-	text-transform: uppercase;
-	transition: all .2s ease-in-out;
-	position: relative;
-	padding: 0.2em 0.75em 0.2em 1em;
-	appearance: none;
-	cursor: pointer;
-	border: solid 1px;
-	border-color: rgb(255, 92, 92);
-	color: #ffbaba;
-	font-size: 1.5em;
+    letter-spacing: 0.5em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all .2s ease-in-out;
+    position: relative;
+    padding: 0.2em 0.75em 0.2em 1em;
+    appearance: none;
+    cursor: pointer;
+    border: solid 1px;
+    border-color: #FFF;
+    color: #fff;
 }
-
 
 .tradeBtn:hover,
 .tradeBtn2:hover {
-	border-color: rgb(255, 92, 92);
-	color: rgb(255, 92, 92);
-}
-.menu-item-2,.menu-item-3{
-    text-transform: uppercase;
-    color: var(--white)
-}
-.menu-item-2:hover,.menu-item-3:hover{
-	color: var(--red);
-}
-/*-------------scroll down icon*/
-.scrollDown-wrapper {
-	position: fixed;
-	z-index: 7;
-	right: -6em;
-	padding: 0em 4em;
-	bottom: calc(50% - 25em);
-	width: 4em;
-	cursor: pointer;
+    border-color: rgb(255, 92, 92);
+    color: #ffbaba;
 }
 
-/* Scroll animation-5 */
-.scroll-down {
-	width: 2px;
-	height: 50em;
-	background: transparent;
-	animation: scrollDown 2s ease infinite;
-}
 
-.scroll-down:before {
-	content: "";
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(transparent, transparent, #ff6e6e, #ff8f8f, #ffffff, transparent, transparent);
-}
-
-@keyframes scrollDown {
-	0% {
-		transform-origin: top;
-		transform: scaleY(0);
-	}
-
-	45% {
-		transform-origin: top;
-		transform: scaleY(1);
-	}
-
-	55% {
-		transform-origin: bottom;
-		transform: scaleY(1);
-	}
-
-	100% {
-		transform-origin: bottom;
-		transform: scaleY(0);
-	}
-}
 /*------------------------- mobile menu */
 .logo-smallscreen {
     height: 2em;
@@ -632,6 +616,7 @@ a {
 
     /* Visit button styles */
     .visitBtn {
+        font-weight: 800;
         height: 1.6em;
         padding: 0.8em 0.5em 0.5em 1em;
     }
@@ -645,14 +630,8 @@ a {
         flex-direction: column;
         justify-content: left;
     }
-
-    .tradeBtn2 {
+    .tradeBtn {
         margin: 0 0 0 0.1em;
-        font-size: 2em;
-    }
-
-    .tradeBtn2.active {
-        margin: 0 0 0 0.3em;
         font-size: 2em;
     }
 
@@ -703,7 +682,7 @@ a {
 
     .frontSection {
         width: 80%;
-        padding: 12em 10% 0em 10%;
+        padding: 12em 10% 12em 10%;
     }
 
     .frontssubtitle {
@@ -723,5 +702,10 @@ a {
     /*---------------------Home----------------------  */
     .overlay {
         visibility: inherit;
+    }
+
+    .accordion-block__header {
+        font-size: 10px;
+        line-height: 1.25;
     }
 }

@@ -66,29 +66,31 @@ function animate() {
 
   renderer.render(scene, camera);
 }
-//---THREE.JS---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
-//---GSAP---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+//---LIST COUNTER---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 let counter = 0;
 let counterInterval = null;
 
 // Start counting function
-
-// Start counting function
-function startCounter() {
+function startCounter(targetValue, speed = 2) {
+  clearInterval(counterInterval); // Clear existing interval
   counterInterval = setInterval(() => {
-    if (counter <= 400) {
-      counter += 1;
+    const step = speed;
+    const direction = targetValue > counter ? 1 : -1;
+
+    if (Math.abs(counter - targetValue) >= step) {
+      counter += step * direction;
 
       // Update colors based on the counter value
       updateColors();
 
       uniforms.iAnimTimer.value = counter;
     } else {
-      // Reset the counter to 0 when it reaches 500
-      counter = 0;
-
+      // Stop the interval when reaching the target value
+      counter = targetValue;
+      updateColors();
       uniforms.iAnimTimer.value = counter;
+      clearInterval(counterInterval);
     }
   }, 50); // Adjust the interval duration as needed
 }
@@ -102,11 +104,132 @@ function resetCounter() {
   // Reset colors to the initial state
   updateColors();
 }
-// Check conditions using ScrollTrigger
+
+// Function to check conditions and start/stop counting
+function animCounter() {
+  // Check if iAnimProgress_1.x is more than 0.1 and iAnimProgress_1.y is less than 0.9
+  if (
+    uniforms.iAnimProgress_1.value.x > 0.1 &&
+    uniforms.iAnimProgress_1.value.y < 0.9
+  ) {
+    // Start counting if not already counting
+    if (!counterInterval) {
+      startCounter(400); // Set the initial target value
+    }
+  } else {
+    // Reset and stop counting if conditions are not met
+    resetCounter();
+  }
+}
+const listItem0 = document.getElementById("listItem0");
+const listItem1 = document.getElementById("listItem1");
+const listItem2 = document.getElementById("listItem2");
+const listItem3 = document.getElementById("listItem3");
+const listItem4 = document.getElementById("listItem4");
+const listItem5 = document.getElementById("listItem5");
+const listItem6 = document.getElementById("listItem6");
+
+listItem0.addEventListener("click", function () {
+  counter=0.0;
+  startCounter(400); // Set the initial target value
+});
+listItem1.addEventListener("click", function () {
+  startCounter(100, 9); // Set the initial target value and speed
+});
+listItem2.addEventListener("click", function () {
+  startCounter(150, 9); // Set the initial target value and speed
+});
+listItem3.addEventListener("click", function () {
+  startCounter(200, 9); // Set the initial target value and speed
+});
+listItem4.addEventListener("click", function () {
+  startCounter(250, 9); // Set the initial target value and speed
+});
+listItem5.addEventListener("click", function () {
+  startCounter(300, 9); // Set the initial target value and speed
+});
+listItem6.addEventListener("click", function () {
+  startCounter(350, 9); // Set the initial target value and speed
+});
+
+// Update colors based on the counter value
+function updateColors() {
+  if (counter > 50 && counter <= 100) {
+    listItem1.classList.add("red");
+  } else {
+    listItem1.classList.remove("red");
+  }
+
+  if (counter > 100 && counter <= 150) {
+    listItem2.classList.add("red");
+  } else {
+    listItem2.classList.remove("red");
+  }
+
+  if (counter > 150 && counter <= 200) {
+    listItem3.classList.add("red");
+  } else {
+    listItem3.classList.remove("red");
+  }
+  if (counter > 200 && counter <= 250) {
+    listItem4.classList.add("red");
+  } else {
+    listItem4.classList.remove("red");
+  }
+
+  if (counter > 250 && counter <= 300) {
+    listItem5.classList.add("red");
+  } else {
+    listItem5.classList.remove("red");
+  }
+  if (counter > 300 && counter <= 350) {
+    listItem6.classList.add("red");
+  } else {
+    listItem6.classList.remove("red");
+  }
+  if (counter >= 399 ) {
+    counter=0; // Set the initial target value
+  }
+
+}
+
+//---GSAP---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 gsap.to(uniforms.iAnimProgress_1.value, {
   x: 1,
   scrollTrigger: {
-    trigger: ".sectionWrap.one",
+    trigger: "#home",
+    start: "0%",
+    end: "100%",
+    scrub: true,
+    onUpdate: animCounter,
+  },
+});
+
+gsap.to(uniforms.iAnimProgress_1.value, {
+  y: 1,
+  scrollTrigger: {
+    trigger: "#howItWorks1",
+    start: "0%",
+    end: "100%",
+    scrub: true,
+    onUpdate: animCounter,
+  },
+});
+
+gsap.to(uniforms.iAnimProgress_1.value, {
+  z: 1,
+  scrollTrigger: {
+    trigger: "#howItWorks2",
+    start: "0%",
+    end: "100%",
+    scrub: true,
+  },
+});
+
+gsap.to(uniforms.iAnimProgress_2.value, {
+  x: 1,
+  scrollTrigger: {
+    trigger: "#howItWorks3",
     start: "0%",
     end: "100%",
     scrub: true,
@@ -115,7 +238,7 @@ gsap.to(uniforms.iAnimProgress_1.value, {
 gsap.to(uniforms.iAnimProgress_2.value, {
   y: 1,
   scrollTrigger: {
-    trigger: ".sectionWrap.two",
+    trigger: "#reachus",
     start: "0%",
     end: "100%",
     scrub: true,
@@ -128,13 +251,13 @@ introTimeline.from(uniforms.iAnimProgress_2.value, {
   z: 2,
   duration: 3.0,
 });
-//---GSAP---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
 //---SCROLLIFY---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 // Initialize Scrollify with mandatory snap scrolling
 $.scrollify({
   section: "section",
-  scrollSpeed: 2000,
+  scrollSpeed: 500,
   scrollbars: false,
   setHeights: false,
   snap: true,
@@ -150,84 +273,121 @@ toggleSwitch.addEventListener("change", function () {
     ? "invert(0%) hue-rotate(0deg)"
     : "invert(100%) hue-rotate(180deg)";
 });
-// Scrollify Scroll Down button function with debounce
-$("#scrollDownID").on(
-  "click",
-  debounce(function () {
-    if (
-      window.scrollY == document.querySelector(".sectionWrap.two").offsetTop
-    ) {
-      $.scrollify.move("#1");
-    } else {
-      $.scrollify.next();
-    }
-  }, 500) // Adjust the delay (in milliseconds) as needed
-);
-// Debounce function to delay execution of the click function
-function debounce(func, delay) {
-  let timeout;
-  return function () {
-    const context = this;
-    const args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(function () {
-      func.apply(context, args);
-    }, delay);
-  };
-}
-// Toggle the state of the menu trigger checkbox
-var menuTrigger = $("#menu_trigger");
-var menuLinks = $(".menu-links li a");
-menuLinks.on("click", function () {
-  menuTrigger.prop("checked", !menuTrigger.prop("checked"));
+//---LOAD FUNCTIONS--
+$(document).ready(function () {
+  $.scrollify.move("#1");
+  $("#reachus").css("pointer-events", "none");
+  $("#progressbar").css("height", "0");
 });
 
-// Set up smooth scroll effect for anchor links
-$('a[href^="#"]').on("click", function (event) {
-  event.preventDefault();
-  let targetId = $(this).attr("href");
-  let target = $(targetId);
 
-  if (target.length) {
-    // Get the index of the target section based on its ID
-    let index = $("section").index(target);
 
-    // Scroll to the target section using Scrollify
-    $.scrollify.move(index);
-  }
+
+
+//---MY MAIN---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+const sectionOne = document.getElementById("home").offsetTop;
+const sectionTwo = document.getElementById("howItWorks1").offsetTop;
+const sectionThree = document.getElementById("howItWorks2").offsetTop;
+const sectionFour = document.getElementById("howItWorks3").offsetTop;
+const sectionFive = document.getElementById("reachus").offsetTop;
+const sectionOneWrap = document.getElementById("sectionOneContent");
+const sectionTwoWrap = document.getElementById("sectionTwoContent");
+const sectionThreeWrap = document.getElementById("sectionThreeContent");
+const sectionFourWrap = document.getElementById("sectionFourContent");
+const sectionFiveWrap = document.getElementById("sectionFiveContent");
+
+const darkLightBtn = document.getElementById("darkLightBtn");
+const homeBtn = document.getElementById("homeBtn");
+const howItWorksBtn = document.getElementById("howItWorksBtn");
+const leanMoreBtn = document.getElementById("leanMoreBtn");
+homeBtn.addEventListener("click", function () {
+  $.scrollify.move("#1");
 });
-//---SCROLLIFY---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+leanMoreBtn.addEventListener("click", function () {
+  $.scrollify.move("#5");
+});
+howItWorksBtn.addEventListener("click", function () {
+  $.scrollify.move("#2");
+});
+
+const burgerHomeBtn = document.getElementById("burgerHomeBtn");
+const burgerHowItWorksBtn = document.getElementById("burgerHowItWorksBtn");
+const burgerLearnMore = document.getElementById("burgerLearnMore");
+burgerHomeBtn.addEventListener("click", function () {
+  $.scrollify.move("#1");
+});
+burgerHowItWorksBtn.addEventListener("click", function () {
+  $.scrollify.move("#2");
+});
+burgerLearnMore.addEventListener("click", function () {
+  $.scrollify.move("#5");
+});
 
 //---SCROLLFUNCTIONS---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-$("#reachus").addClass("disabled");
 $(window).scroll(function () {
-  //scroll down icon invertion
   //ONE  - section functions based on current section
-  const sectionOne = document.querySelector(".sectionWrap.one").offsetTop;
   if (window.scrollY == sectionOne) {
-    scrollColorElementOne.classList.add("white");
-    checkBox1.checked = false; // Expand the checkbox
-    checkBox2.checked = true; // Collapse the checkbox
-    checkBox3.checked = true; // Collapse the checkbox
+    sectionOneWrap.style.opacity = 1;
+    burgerHomeBtn.style.color = "#ff6464";
+    howItWorksBtn.classList.remove("red");
+    
+    darkLightBtn.style.opacity = 1;
+    $("#darkLightBtn").css("pointer-events", "auto");
   } else {
+    sectionOneWrap.style.opacity = 0;
+    burgerHomeBtn.style.color = "#fff";
+    burgerHowItWorksBtn.style.color = "#fff";
+    darkLightBtn.style.opacity = 0;
+    $("#darkLightBtn").css("pointer-events", "none");
   }
+
   //TWO  - section functions based on current section
-  const scrollDownElement = document.querySelector(".scrollDown-wrapper");
-  const texts = document.querySelectorAll(".box__text");
-  const scrollColorElementTwo = document.querySelector(".menu-item-2");
-  const sectionTwo = document.querySelector(".sectionWrap.two").offsetTop;
-  if (window.scrollY > sectionTwo / 2) {
-    scrollDownElement.style.transform = `scaleY(-1)`;
-
-    $("#reachus").removeClass("disabled");
-    scrollColorElementTwo.classList.add("red");
-    scrollColorElementTwo.classList.remove("white");
+  if (window.scrollY == sectionTwo) {
+    sectionTwoWrap.style.opacity = 1;
+    howItWorksBtn.classList.add("red");
+    burgerHowItWorksBtn.style.color = "#ff6464";
+    $("#howItWorks1").css("pointer-events", "auto");
   } else {
-    scrollDownElement.style.transform = `scaleY(1)`;
+    sectionTwoWrap.style.opacity = 0;
+    $("#howItWorks1").css("pointer-events", "none");
+  }
+  //THREE  - section functions based on current section
+  if (window.scrollY == sectionThree) {
+    sectionThreeWrap.style.opacity = 1;
+    $("#howItWorks2").css("pointer-events", "auto");
+    
+    howItWorksBtn.classList.add("red");
+    burgerHowItWorksBtn.style.color = "#ff6464";
+  } else {
+    sectionThreeWrap.style.opacity = 0;
+    $("#howItWorks2").css("pointer-events", "none");
+  }
+  //FOUR  - section functions based on current section
+  if (window.scrollY == sectionFour) {
+    sectionFourWrap.style.opacity = 1;
+    $("#howItWorks3").css("pointer-events", "auto");
 
-    $("#reachus").addClass("disabled");
-    scrollColorElementTwo.classList.remove("red");
-    scrollColorElementTwo.classList.add("white");
+    howItWorksBtn.classList.add("red");
+    burgerHowItWorksBtn.style.color = "#ff6464";
+  } else {
+    sectionFourWrap.style.opacity = 0;
+    $("#howItWorks3").css("pointer-events", "none");
+
+  }
+  //FIVE  - section functions based on current section
+  if (window.scrollY == sectionFive) {
+    sectionFiveWrap.style.opacity = 1;
+    $("#reachus").css("pointer-events", "auto");
+    howItWorksBtn.classList.remove("red");
+    burgerHowItWorksBtn.style.color = "#fff";
+    leanMoreBtn.classList.add("red");
+
+    burgerLearnMore.style.color = "#ff6464";
+  } else {
+    sectionFiveWrap.style.opacity = 0;
+    $("#reachus").css("pointer-events", "none");
+    leanMoreBtn.classList.remove("red");
+    burgerLearnMore.style.color = "#fff";
   }
 
   //scrollbar style
@@ -236,41 +396,10 @@ $(window).scroll(function () {
   var wh = $(window).height();
   var scrollPercent = (scroll / (dh - wh)) * wh;
   $("#progressbar").css("height", scrollPercent + "px");
-
-  //caption text visibility
-  const sections = document.querySelectorAll(".sectionWrap");
-
-  sections.forEach((section, index) => {
-    const rect = section.getBoundingClientRect();
-    const isVisible =
-      rect.top <= window.innerHeight / 2 &&
-      rect.bottom >= window.innerHeight / 2;
-    if (isVisible) {
-      const opacity =
-        1 - Math.max(0, Math.min(1, Math.abs(rect.top) / window.innerHeight));
-      texts[index].style.opacity = opacity;
-    } else {
-      texts[index].style.opacity = 0;
-    }
-  });
-
-  const scrollPosition = $(this).scrollTop();
-  /*/ Highlight current section in menu on scroll
-  $("section").each(function () {
-    var sectionTop = $(this).offset().top;
-    var sectionHeight = $(this).outerHeight();
-    var sectionId = $(this).attr("id");
-
-    // Check if the middle of the section is in the viewport
-    if (scrollPosition + window.innerHeight / 2 >= sectionTop) {
-      $(".menu__item").removeClass("menu__item--current");
-      $(".menu__link[href='#" + sectionId + "']")
-        .parent()
-        .addClass("menu__item--current");
-    }
-  });*/
 });
-//---SCROLLFUNCTIONS---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+
+
 
 //---ROLLDOWNTEXT---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
