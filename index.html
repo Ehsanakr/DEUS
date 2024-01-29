@@ -24,7 +24,7 @@
     <nav class="uppercase text-white">
         <ul class="fixed  max-[1000px]:hidden  z-10 w-full text-xl text-white ">
             <div class=" flex flex-row px-6 py-6 justify-between ">
-                <div class="flex flex-row items-end" id="mainMenuWrap">
+                <div class="flex flex-row items-baseline" id="mainMenuWrap">
                     <a class="mx-4 max-w-[170px] cursor-pointer" id="homeBtn"> <img src="./assets/SYMMIO-Logo.png" />
                     </a>
                     <a class="mx-4 tracking-tight hover:text-[#ffaaaa] cursor-pointer" id="howItWorksBtn">
@@ -1609,15 +1609,15 @@
         vec3 la;  // Camera look at
         if(iResolution.x > 1250.0 && iResolution.x>iResolution.y) {
             // Camera location right - left
-            ro = vec3(0.0 - iAnimProgress_1.x * 2.0  + iAnimProgress_1.z * 2.0 - iAnimProgress_2.x * 1.7,
+            ro = vec3(0.0 - iAnimProgress_1.x * 2.0  + iAnimProgress_1.z * 2.0 - iAnimProgress_2.x * 1.2,
             //Camera location up - down
             0.5 + (iAnimProgress_2.z*2.0*(1.0-iAnimProgress_1.x)),
             //Camera location forth - back
-            -5.0 - iAnimProgress_1.y * 1.5 + iAnimProgress_2.x *1.0+ iAnimProgress_1.z * 0.5 + iAnimProgress_2.x * 5.6);
+            -5.0 - iAnimProgress_1.y * 1.5 + iAnimProgress_1.z * 0.5 + iAnimProgress_2.x * 6.6);
             // Camera look right - left
-            la = vec3(12.0-(iClick*12.0) - iAnimProgress_1.x * 2.0 - iAnimProgress_1.y * 0.6 + iAnimProgress_1.z * 0.5- iAnimProgress_2.x * 1.7,
+            la = vec3(12.0-(iClick*12.0) - iAnimProgress_1.x * 2.0 - iAnimProgress_1.y * 0.6 + iAnimProgress_1.z * 0.5+ iAnimProgress_2.x * 0.7,
             // Camera look up - down
-            1.75 - iAnimProgress_1.z * 0.5 - iAnimProgress_2.x * 0.48,
+            1.75 - iAnimProgress_1.z * 0.5 + iAnimProgress_2.x * 1.0,
             // Camera look forth - back
             0.0 + iAnimProgress_2.x * 10.0);
             // -------------------Small screen mode
