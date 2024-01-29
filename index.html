@@ -22,7 +22,7 @@
 <body class="font-[Manrope]">
 
     <nav class="uppercase text-white">
-        <ul class="fixed  max-[1000px]:hidden  z-10 w-full text-base text-white ">
+        <ul class="fixed  max-[1000px]:hidden  z-10 w-full text-xl text-white ">
             <div class=" flex flex-row px-6 py-6 justify-between ">
                 <div class="flex flex-row items-end" id="mainMenuWrap">
                     <a class="mx-4 max-w-[170px] cursor-pointer" id="homeBtn"> <img src="./assets/SYMMIO-Logo.png" />
@@ -98,13 +98,14 @@
         <section class="relative w-full h-full min-height-screen pt-10 lg:pt-10 text-white" id="home">
             <div class="fixed w-full h-full py-10 lg:py-10  transition-opacity ease-in-out duration-500"
                 id="sectionOneContent">
-                <div class="flex flex-col justify-between text-center  h-[40%] lg:h-[99%]" id="text1">
+                <div class="flex flex-col justify-between text-center  h-[40%] lg:h-[100%]" id="text1">
                     <div class="">
                         <div class=" text-2xl lg:text-5xl">
-                            <a class=" bg-gradient-to-r from-[#ffffff] to-[#ff6e6e] bg-clip-text text-transparent">
+                            <a
+                                class="leading-[1.5em] bg-gradient-to-r from-[#ffffff] to-[#ff6e6e] bg-clip-text text-transparent">
                                 A protocol for
                             </a>
-                            <div class="ml-[calc(50%-3.5em)] translate-x-[-50%] transition-all duration-500  whitespace-nowrap"
+                            <div class="leading-[1.5em] ml-[calc(50%-3.5em)] translate-x-[-50%] transition-all duration-500  whitespace-nowrap"
                                 id="rollingTextContainer">
                                 <a
                                     class=" bg-gradient-to-l from-[#ff6e6e] via-[#ff8f8f] to-[#ffffff] bg-clip-text text-transparent">
@@ -115,16 +116,17 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="mt-8 lg:mt-2 ml-[5%] w-[90%] items-center justify-center">
-                            <a class=" text-s tracking-[2px] lg:text-2xl">
+                        <div class="mt-8 lg:mt-2 ml-[5%] w-[90%] items-center justify-center font-thin">
+                            <a class=" text-s tracking-[2px] lg:text-3xl">
                                 Bilateral OTC Derivatives with Intent-Based execution.<br />
                                 Leverage trade any asset permissionlessly with hyper-efficient liquidity.
                             </a>
                         </div>
                     </div>
                     <div class="text-center bottom-0 w-[100vw]">
-                        <a class="-mr-[2rem] lg:pl-[6rem] text-[2rem] lg:text-[6rem] tracking-[2rem] lg:tracking-[8rem] text-white ">
-                            SYMMIO                        </a>
+                        <a
+                            class="-mr-[2rem] lg:-mr-[7vw] lg:mb-4 text-[2rem] lg:text-[6vw] tracking-[2rem] lg:tracking-[8vw] text-white ">
+                            SYMMIO</a>
                     </div>
                 </div>
         </section>
@@ -132,22 +134,22 @@
         <section class="relative w-full h-full min-height-screen pt-10 lg:pt-10 text-white" id="howItWorks1">
             <div id="sectionTwoContent"
                 class="fixed z-10 opacity-0  px-8 lg:px-20 py-4 lg:py-20 transition-opacity ease-in-out duration-500">
-                <div class="flex flex-col w-[95%] lg:w-[70%] text-left">
+                <div class="flex flex-col w-[95%] lg:w-[80%] text-left">
                     <a id="listItem0"
-                        class=" text-[22px] lg:text-[32px] mb-8 leading-[1.2em] cursor-pointer bg-gradient-to-r from-[#ffffff] via-[#ff6e6e] to-[#ff6e6e] bg-clip-text text-transparent">
+                        class=" text-[22px] lg:text-[1.6vw] mb-8 leading-[1.4em] font-semibold cursor-pointer bg-gradient-to-r from-[#ffffff] via-[#ff6e6e] to-[#ff6e6e] bg-clip-text text-transparent">
                         HOW TO TRADE DERIVATIVES with INTENTs using SYMMIO.</a>
-                    <div id="" class="flex flex-col text-l ml-4 lg:ml-8">
-                        <a id="listItem1" class="cursor-pointer hover:text-[#ffaaaa] pb-2">
+                    <div id="" class="flex flex-col text-l lg:text-[1.2vw] ml-2 lg:ml-8">
+                        <a id="listItem1" class="cursor-pointer hover:text-[#ffaaaa]">
                             • FORMULATE your INTENT via 3rd party frontend</a>
-                        <a id="listItem2" class="cursor-pointer hover:text-[#ffaaaa] pb-2">
+                        <a id="listItem2" class="cursor-pointer hover:text-[#ffaaaa]">
                             • SEND your INTENT to the pool</a>
-                        <a id="listItem3" class="cursor-pointer hover:text-[#ffaaaa] pb-2">
+                        <a id="listItem3" class="cursor-pointer hover:text-[#ffaaaa]">
                             • Counterparties (Hedgers) SEE your INTENT in the pool</a>
-                        <a id="listItem4" class="cursor-pointer hover:text-[#ffaaaa] pb-2">
+                        <a id="listItem4" class="cursor-pointer hover:text-[#ffaaaa]">
                             • Counterparty (Hedger) CLAIMs your intent</a>
-                        <a id="listItem5" class="cursor-pointer hover:text-[#ffaaaa] pb-2">
+                        <a id="listItem5" class="cursor-pointer hover:text-[#ffaaaa]">
                             • Claimed INTENTs CREATE a trade</a>
-                        <a id="listItem6" class="cursor-pointer hover:text-[#ffaaaa] pb-2">
+                        <a id="listItem6" class="cursor-pointer hover:text-[#ffaaaa]">
                             • Both parties LOCK collateral</a>
                     </div>
                 </div>
@@ -156,13 +158,15 @@
 
 
         <section class="relative w-full h-full min-height-screen pt-10 lg:pt-10 text-white" id="howItWorks2">
-            <div class="fixed opacity-0 px-8 lg:px-20 -my-4 lg:py-10 transition-opacity ease-in-out duration-500"
+            <div class="fixed opacity-0 px-8 lg:px-20 -my-2 lg:py-10 transition-opacity ease-in-out duration-500"
                 id="sectionThreeContent">
                 <div class="flex flex-col w-[95%] lg:w-[70%] text-left">
                     <div
-                    class=" text-[22px] lg:text-[32px] mb-6 lg:mb-8 leading-[1.2em] cursor-pointer bg-gradient-to-r from-[#ffffff] via-[#ff6e6e] to-[#ff6e6e] bg-clip-text text-transparent">
+                        class=" text-[22px] lg:text-[1.6vw] mb-8 leading-[1.4em] font-semibold cursor-pointer bg-gradient-to-r from-[#ffffff] via-[#ff6e6e] to-[#ff6e6e] bg-clip-text text-transparent">
                         Neutral Parties as Arbiters</div>
-                    <div class=" ml-4 lg:ml-8">Arbiters are advanced liquidators ensuring all parties adhere to the rules and
+                    <div class=" text-l lg:text-[1.2vw] ml-2 lg:ml-8">Arbiters are advanced liquidators ensuring all
+                        parties adhere to the
+                        rules and
                         maintain solvency.<br>
                         Both sides can be liquidated and their actions disputed, creating a trustless and highly capital
                         efficient system. </div>
@@ -175,9 +179,9 @@
             <div class="fixed opacity-0 px-8 lg:px-20 -my-16 lg:py-10 transition-opacity ease-in-out duration-500"
                 id="sectionFourContent">
                 <a
-                class=" text-[22px] lg:text-[32px] mb-6 lg:mb-8 leading-[1.2em] cursor-pointer bg-gradient-to-r from-[#ffffff] via-[#ff6e6e] to-[#ff6e6e] bg-clip-text text-transparent">
+                    class=" text-[22px] lg:text-[1.6vw]  leading-[1.4em] font-semibold cursor-pointer bg-gradient-to-r from-[#ffffff] via-[#ff6e6e] to-[#ff6e6e] bg-clip-text text-transparent">
                     PartyA and PartyB are SYMMETRICAL</a>
-                <div class="ml-4 lg:ml-8 mt-4">One side LONGs 1 BTC.<br>
+                <div class=" text-l lg:text-[1.2vw] ml-2 mt-8 lg:ml-8">One side LONGs 1 BTC.<br>
                     The other side SHORTs 1 BTC.<br>
                     The loss of one side is the win of the other.<br>
                 </div>
@@ -187,14 +191,14 @@
         <section class="relative w-full h-[100vh] min-height-[100vh] pt-10 lg:pt-10 text-white" id="reachus">
             <div class="fixed z-10 opacity-0 w-full h-[100vh] transition-opacity ease-in-out duration-500"
                 id="sectionFiveContent">
-                <div class="flex flex-col lg:flex-row -mt-[100px] justify-center text-center">
+                <div class="flex flex-col lg:flex-row -mt-[120px] lg:mt-[120px] justify-center text-center">
                     <div class="flex flex-col items-center  px-8">
                         <a
-                            class="text-2xl lg:text-3xl mb-8 bg-gradient-to-r from-[#fff] to-[#e85248] bg-clip-text text-transparent">
+                            class="text-2xl lg:text-3xl my-8 bg-gradient-to-r from-[#fff] to-[#e85248] bg-clip-text text-transparent">
                             INTENT on knowing more?</a>
                         <div class="flex flex-col lg:flex-row ">
                             <a href="https://docs.symm.io/" target="_blank"
-                                class="flex flex-row items-center  mb-4  mx-4 px-4 py-2 hover:text-[#ff4848] border hover:border-[#ff4848] border-white-500 w-100">
+                                class="flex flex-row items-center bg-[#1f1f1feb] mb-4  mx-4 px-4 py-2 hover:text-[#ff4848] border hover:border-[#ff4848] border-white-500 w-100">
                                 <svg class="w-[40px] lg:w-[60px] mr-4 items-center" viewBox="0 0 24 24">
                                     <path fill="currentColor"
                                         d="M10.802 17.77a.703.703 0 1 1-.002 1.406a.703.703 0 0 1 .002-1.406m11.024-4.347a.703.703 0 1 1 .001-1.406a.703.703 0 0 1-.001 1.406m0-2.876a2.176 2.176 0 0 0-2.174 2.174c0 .233.039.465.115.691l-7.181 3.823a2.165 2.165 0 0 0-1.784-.937c-.829 0-1.584.475-1.95 1.216l-6.451-3.402c-.682-.358-1.192-1.48-1.138-2.502c.028-.533.212-.947.493-1.107c.178-.1.392-.092.62.027l.042.023c1.71.9 7.304 3.847 7.54 3.956c.363.169.565.237 1.185-.057l11.564-6.014c.17-.064.368-.227.368-.474c0-.342-.354-.477-.355-.477c-.658-.315-1.669-.788-2.655-1.25c-2.108-.987-4.497-2.105-5.546-2.655c-.906-.474-1.635-.074-1.765.006l-.252.125C7.78 6.048 1.46 9.178 1.1 9.397C.457 9.789.058 10.57.006 11.539c-.08 1.537.703 3.14 1.824 3.727l6.822 3.518a2.175 2.175 0 0 0 2.15 1.862a2.177 2.177 0 0 0 2.173-2.14l7.514-4.073c.38.298.853.461 1.337.461A2.176 2.176 0 0 0 24 12.72a2.176 2.176 0 0 0-2.174-2.174" />
@@ -205,7 +209,7 @@
                                 </span>
                             </a>
                             <a href="https://docs.symm.io/overview/introduction-to-symmio/" target="_blank"
-                                class="flex flex-row items-center  mb-4  mx-4 px-4 py-2 hover:text-[#ff4848] border hover:border-[#ff4848] border-white-500 w-100">
+                                class="flex flex-row items-center bg-[#1f1f1feb] mb-4  mx-4 px-4 py-2 hover:text-[#ff4848] border hover:border-[#ff4848] border-white-500 w-100">
                                 <svg class="w-[40px] lg:w-[60px] mr-4 items-center" viewBox="0 0 24 24">
                                     <g fill="none" stroke="currentColor" stroke-width="1.5">
                                         <path
@@ -229,7 +233,7 @@
                             ...Or intend to take action?</a>
                         <div class="flex flex-col lg:flex-row">
                             <a href="" target="_blank"
-                                class="flex flex-row items-center mb-4 mx-4 px-4 py-2 hover:text-[#ff4848] border hover:border-[#ff4848] border-white-500 w-100">
+                                class="flex flex-row items-center bg-[#1f1f1feb] mb-4 mx-4 px-4 py-2 hover:text-[#ff4848] border hover:border-[#ff4848] border-white-500 w-100">
                                 <svg class="w-[40px] lg:w-[60px] mr-4 items-center" viewBox="0 0 24 24">
                                     <path fill="currentColor"
                                         d="m21.71 9.29l-4-4a1 1 0 0 0-1.42 1.42L18.59 9H7a1 1 0 0 0 0 2h14a1 1 0 0 0 .92-.62a1 1 0 0 0-.21-1.09ZM17 13H3a1 1 0 0 0-.92.62a1 1 0 0 0 .21 1.09l4 4a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.42L5.41 15H17a1 1 0 0 0 0-2Z" />
@@ -240,7 +244,7 @@
                                 </span>
                             </a>
                             <a href="https://docs.symm.io/building-on-symm-io/builders-introduction" target="_blank"
-                                class="flex flex-row lg:flex-row items-center mb-4 mx-4 px-4 py-2 hover:text-[#ff4848] border hover:border-[#ff4848] border-white-500 w-100">
+                                class="flex flex-row lg:flex-row items-center bg-[#1f1f1feb] mb-4 mx-4 px-4 py-2 hover:text-[#ff4848] border hover:border-[#ff4848] border-white-500 w-100">
                                 <svg class="w-[40px] lg:w-[60px] mr-4 items-center" viewBox="0 0 24 24">
                                     <g fill="none" stroke="currentColor" stroke-width="1.5">
                                         <path
@@ -264,7 +268,7 @@
                     </div>
                     <div class="flex flex-col items-center ">
                         <div
-                            class="text-3xl mt-2 bg-gradient-to-r from-[#fff] to-[#e85248] bg-clip-text text-transparent">
+                            class="text-3xl mt-24 bg-gradient-to-r from-[#fff] to-[#e85248] bg-clip-text text-transparent">
                             Connect With Us</div>
                         <div class="flex flex-row">
                             <a href="https://medium.com/symmio-publication"><svg
