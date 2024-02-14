@@ -66,31 +66,29 @@ function animate() {
 
   renderer.render(scene, camera);
 }
+//---THREE.JS---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
-//---LIST COUNTER---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+//---GSAP---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 let counter = 0;
 let counterInterval = null;
 
 // Start counting function
-function startCounter(targetValue, speed = 2) {
-  clearInterval(counterInterval); // Clear existing interval
-  counterInterval = setInterval(() => {
-    const step = speed;
-    const direction = targetValue > counter ? 1 : -1;
 
-    if (Math.abs(counter - targetValue) >= step) {
-      counter += step * direction;
+// Start counting function
+function startCounter() {
+  counterInterval = setInterval(() => {
+    if (counter <= 400) {
+      counter += 1;
 
       // Update colors based on the counter value
       updateColors();
 
       uniforms.iAnimTimer.value = counter;
     } else {
-      // Stop the interval when reaching the target value
-      counter = targetValue;
-      updateColors();
+      // Reset the counter to 0 when it reaches 500
+      counter = 0;
+
       uniforms.iAnimTimer.value = counter;
-      clearInterval(counterInterval);
     }
   }, 50); // Adjust the interval duration as needed
 }
@@ -104,132 +102,20 @@ function resetCounter() {
   // Reset colors to the initial state
   updateColors();
 }
-
-// Function to check conditions and start/stop counting
-function animCounter() {
-  // Check if iAnimProgress_1.x is more than 0.1 and iAnimProgress_1.y is less than 0.9
-  if (
-    uniforms.iAnimProgress_1.value.x > 0.1 &&
-    uniforms.iAnimProgress_1.value.y < 0.9
-  ) {
-    // Start counting if not already counting
-    if (!counterInterval) {
-      startCounter(400); // Set the initial target value
-    }
-  } else {
-    // Reset and stop counting if conditions are not met
-    resetCounter();
-  }
-}
-const listItem0 = document.getElementById("listItem0");
-const listItem1 = document.getElementById("listItem1");
-const listItem2 = document.getElementById("listItem2");
-const listItem3 = document.getElementById("listItem3");
-const listItem4 = document.getElementById("listItem4");
-const listItem5 = document.getElementById("listItem5");
-const listItem6 = document.getElementById("listItem6");
-
-listItem0.addEventListener("click", function () {
-  counter=0.0;
-  startCounter(400); // Set the initial target value
-});
-listItem1.addEventListener("click", function () {
-  startCounter(100, 9); // Set the initial target value and speed
-});
-listItem2.addEventListener("click", function () {
-  startCounter(150, 9); // Set the initial target value and speed
-});
-listItem3.addEventListener("click", function () {
-  startCounter(200, 9); // Set the initial target value and speed
-});
-listItem4.addEventListener("click", function () {
-  startCounter(250, 9); // Set the initial target value and speed
-});
-listItem5.addEventListener("click", function () {
-  startCounter(300, 9); // Set the initial target value and speed
-});
-listItem6.addEventListener("click", function () {
-  startCounter(350, 9); // Set the initial target value and speed
-});
-
-// Update colors based on the counter value
-function updateColors() {
-  if (counter > 50 && counter <= 100) {
-    listItem1.classList.add("red");
-  } else {
-    listItem1.classList.remove("red");
-  }
-
-  if (counter > 100 && counter <= 150) {
-    listItem2.classList.add("red");
-  } else {
-    listItem2.classList.remove("red");
-  }
-
-  if (counter > 150 && counter <= 200) {
-    listItem3.classList.add("red");
-  } else {
-    listItem3.classList.remove("red");
-  }
-  if (counter > 200 && counter <= 250) {
-    listItem4.classList.add("red");
-  } else {
-    listItem4.classList.remove("red");
-  }
-
-  if (counter > 250 && counter <= 300) {
-    listItem5.classList.add("red");
-  } else {
-    listItem5.classList.remove("red");
-  }
-  if (counter > 300 && counter <= 350) {
-    listItem6.classList.add("red");
-  } else {
-    listItem6.classList.remove("red");
-  }
-  if (counter >= 399 ) {
-    counter=0; // Set the initial target value
-  }
-
-}
-
-//---GSAP---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+// Check conditions using ScrollTrigger
 gsap.to(uniforms.iAnimProgress_1.value, {
   x: 1,
   scrollTrigger: {
-    trigger: "#home",
+    trigger: ".sectionWrap.one",
     start: "0%",
     end: "100%",
     scrub: true,
-    onUpdate: animCounter,
   },
 });
-
 gsap.to(uniforms.iAnimProgress_1.value, {
   y: 1,
   scrollTrigger: {
-    trigger: "#howItWorks1",
-    start: "0%",
-    end: "100%",
-    scrub: true,
-    onUpdate: animCounter,
-  },
-});
-
-gsap.to(uniforms.iAnimProgress_1.value, {
-  z: 1,
-  scrollTrigger: {
-    trigger: "#howItWorks2",
-    start: "0%",
-    end: "100%",
-    scrub: true,
-  },
-});
-
-gsap.to(uniforms.iAnimProgress_2.value, {
-  x: 1,
-  scrollTrigger: {
-    trigger: "#howItWorks3",
+    trigger: ".sectionWrap.two",
     start: "0%",
     end: "100%",
     scrub: true,
@@ -238,7 +124,7 @@ gsap.to(uniforms.iAnimProgress_2.value, {
 gsap.to(uniforms.iAnimProgress_2.value, {
   y: 1,
   scrollTrigger: {
-    trigger: "#reachus",
+    trigger: ".sectionWrap.three",
     start: "0%",
     end: "100%",
     scrub: true,
@@ -251,11 +137,19 @@ introTimeline.from(uniforms.iAnimProgress_2.value, {
   z: 2,
   duration: 3.0,
 });
-
+//---GSAP---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 //---SCROLLIFY---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-
-
+// Initialize Scrollify with mandatory snap scrolling
+$.scrollify({
+  section: "section",
+  scrollSpeed: 1500,
+  scrollbars: false,
+  setHeights: false,
+  snap: true,
+  scrollSnapOffset: 0,
+  easing: "easeOutSine",
+});
 // Dark/Light mode function
 const toggleSwitch = document.getElementById("toggleSwitch");
 const htmlElement = document.querySelector("html");
@@ -264,122 +158,132 @@ toggleSwitch.addEventListener("change", function () {
     ? "invert(0%) hue-rotate(0deg)"
     : "invert(100%) hue-rotate(180deg)";
 });
-//---LOAD FUNCTIONS--
-$(document).ready(function () {
-  $.scrollify.move("#1");
-  $("#reachus").css("pointer-events", "none");
-  $("#progressbar").css("height", "0");
+// Scrollify Scroll Down button function with debounce
+$("#scrollDownID").on(
+  "click",
+  debounce(function () {
+    if (
+      window.scrollY == document.querySelector(".sectionWrap.two").offsetTop
+    ) {
+      $.scrollify.move("#1");
+    } else {
+      $.scrollify.next();
+    }
+  }, 500) // Adjust the delay (in milliseconds) as needed
+);
+// Debounce function to delay execution of the click function
+function debounce(func, delay) {
+  let timeout;
+  return function () {
+    const context = this;
+    const args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      func.apply(context, args);
+    }, delay);
+  };
+}
+// Toggle the state of the menu trigger checkbox
+var menuTrigger = $("#menu_trigger");
+var menuLinks = $(".menu-links li a");
+menuLinks.on("click", function () {
+  menuTrigger.prop("checked", !menuTrigger.prop("checked"));
 });
 
+// Set up smooth scroll effect for anchor links
+$('a[href^="#"]').on("click", function (event) {
+  event.preventDefault();
+  let targetId = $(this).attr("href");
+  let target = $(targetId);
 
+  if (target.length) {
+    // Get the index of the target section based on its ID
+    let index = $("section").index(target);
 
-
-
-//---MY MAIN---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-const sectionOne = document.getElementById("home").offsetTop;
-const sectionTwo = document.getElementById("howItWorks1").offsetTop;
-const sectionThree = document.getElementById("howItWorks2").offsetTop;
-const sectionFour = document.getElementById("howItWorks3").offsetTop;
-const sectionFive = document.getElementById("reachus").offsetTop;
-const sectionOneWrap = document.getElementById("sectionOneContent");
-const sectionTwoWrap = document.getElementById("sectionTwoContent");
-const sectionThreeWrap = document.getElementById("sectionThreeContent");
-const sectionFourWrap = document.getElementById("sectionFourContent");
-const sectionFiveWrap = document.getElementById("sectionFiveContent");
-
-const darkLightBtn = document.getElementById("darkLightBtn");
-const homeBtn = document.getElementById("homeBtn");
-const howItWorksBtn = document.getElementById("howItWorksBtn");
-const leanMoreBtn = document.getElementById("leanMoreBtn");
-homeBtn.addEventListener("click", function () {
-  $.scrollify.move("#1");
+    // Scroll to the target section using Scrollify
+    $.scrollify.move(index);
+  }
 });
-leanMoreBtn.addEventListener("click", function () {
-  $.scrollify.move("#5");
-});
-howItWorksBtn.addEventListener("click", function () {
-  $.scrollify.move("#2");
-});
-
-const burgerHomeBtn = document.getElementById("burgerHomeBtn");
-const burgerHowItWorksBtn = document.getElementById("burgerHowItWorksBtn");
-const burgerLearnMore = document.getElementById("burgerLearnMore");
-burgerHomeBtn.addEventListener("click", function () {
-  $.scrollify.move("#1");
-});
-burgerHowItWorksBtn.addEventListener("click", function () {
-  $.scrollify.move("#2");
-});
-burgerLearnMore.addEventListener("click", function () {
-  $.scrollify.move("#5");
-});
+//---SCROLLIFY---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 //---SCROLLFUNCTIONS---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+const sectionOne = document.querySelector(".sectionWrap.one");
+const sectionOneTop = sectionOne.offsetTop;
+const sectionTwo = document.querySelector(".sectionWrap.two");
+const sectionTwoTop = sectionTwo.offsetTop;
+const sectionThree = document.querySelector(".sectionWrap.three");
+const sectionThreeTop = sectionThree.offsetTop;
+
+const menuItem2 = document.querySelector(".menu-item-2");
+const menuItem3 = document.querySelector(".menu-item-3");
+$("#ourPartners").addClass("disabled");
+$("#reachus").addClass("disabled");
+sectionTwo.style.opacity = 0;
+sectionThree.style.opacity = 0;
+
 $(window).scroll(function () {
+  //MENU ITEMS COLOR
+
+  if (
+    window.scrollY >= sectionTwoTop / 2 &&
+    window.scrollY <= sectionThreeTop - sectionTwoTop / 2.0
+  ) {
+    menuItem2.classList.add("red");
+    menuItem2.classList.remove("white");
+  } else {
+    menuItem2.classList.remove("red");
+    menuItem2.classList.add("white");
+  }
+  if (window.scrollY >= sectionThreeTop - sectionTwoTop / 2.0) {
+    menuItem3.classList.add("red");
+    menuItem3.classList.remove("white");
+  } else {
+    menuItem3.classList.remove("red");
+    menuItem3.classList.add("white");
+  }
+
   //ONE  - section functions based on current section
-  if (window.scrollY == sectionOne) {
-    sectionOneWrap.style.opacity = 1;
-    burgerHomeBtn.style.color = "#ff6464";
-    howItWorksBtn.classList.remove("red");
-    
-    darkLightBtn.style.opacity = 1;
-    $("#darkLightBtn").css("pointer-events", "auto");
-  } else {
-    sectionOneWrap.style.opacity = 0;
-    burgerHomeBtn.style.color = "#fff";
-    burgerHowItWorksBtn.style.color = "#fff";
-    darkLightBtn.style.opacity = 0;
-    $("#darkLightBtn").css("pointer-events", "none");
-  }
 
+  if (window.scrollY == sectionOneTop) {
+    sectionOne.style.opacity = 1;
+  } else {
+    sectionOne.style.opacity = 1 - window.scrollY / sectionTwoTop;
+  }
   //TWO  - section functions based on current section
-  if (window.scrollY == sectionTwo) {
-    sectionTwoWrap.style.opacity = 1;
-    howItWorksBtn.classList.add("red");
-    burgerHowItWorksBtn.style.color = "#ff6464";
-    $("#howItWorks1").css("pointer-events", "auto");
+
+  var opacity = Math.max((window.scrollY / sectionTwoTop - 0.5) * 2.0, 0.0);
+
+  if (window.scrollY <= sectionTwoTop) {
+    sectionTwo.style.opacity = opacity;
+    $("#ourPartners").removeClass("disabled");
   } else {
-    sectionTwoWrap.style.opacity = 0;
-    $("#howItWorks1").css("pointer-events", "none");
+    opacity = (sectionTwoTop / window.scrollY - 0.5) * 2.0;
+    sectionTwo.style.opacity = opacity;
+    $("#ourPartners").addClass("disabled");
   }
+
   //THREE  - section functions based on current section
-  if (window.scrollY == sectionThree) {
-    sectionThreeWrap.style.opacity = 1;
-    $("#howItWorks2").css("pointer-events", "auto");
-    
-    howItWorksBtn.classList.add("red");
-    burgerHowItWorksBtn.style.color = "#ff6464";
-  } else {
-    sectionThreeWrap.style.opacity = 0;
-    $("#howItWorks2").css("pointer-events", "none");
-  }
-  //FOUR  - section functions based on current section
-  if (window.scrollY == sectionFour) {
-    sectionFourWrap.style.opacity = 1;
-    $("#howItWorks3").css("pointer-events", "auto");
+  var opacityThree = Math.max(
+    (window.scrollY / sectionThreeTop - 0.5) * 2.0,
+    0.0
+  );
 
-    howItWorksBtn.classList.add("red");
-    burgerHowItWorksBtn.style.color = "#ff6464";
-  } else {
-    sectionFourWrap.style.opacity = 0;
-    $("#howItWorks3").css("pointer-events", "none");
+  const scrollDownElement = document.querySelector(".scrollDown-wrapper");
+  if (
+    window.scrollY > sectionThreeTop / 2 &&
+    window.scrollY <= sectionThreeTop
+  ) {
+    sectionThree.style.opacity = opacityThree;
+    scrollDownElement.style.transform = `scaleY(-1)`;
 
-  }
-  //FIVE  - section functions based on current section
-  if (window.scrollY == sectionFive) {
-    sectionFiveWrap.style.opacity = 1;
-    $("#reachus").css("pointer-events", "auto");
-    howItWorksBtn.classList.remove("red");
-    burgerHowItWorksBtn.style.color = "#fff";
-    leanMoreBtn.classList.add("red");
-
-    burgerLearnMore.style.color = "#ff6464";
+    $("#reachus").removeClass("disabled");
   } else {
-    sectionFiveWrap.style.opacity = 0;
-    $("#reachus").css("pointer-events", "none");
-    leanMoreBtn.classList.remove("red");
-    burgerLearnMore.style.color = "#fff";
+    sectionThree.style.opacity = opacityThree;
+    scrollDownElement.style.transform = `scaleY(1)`;
+
+    $("#reachus").addClass("disabled");
   }
+
 
   //scrollbar style
   var scroll = $(window).scrollTop();
@@ -388,9 +292,7 @@ $(window).scroll(function () {
   var scrollPercent = (scroll / (dh - wh)) * wh;
   $("#progressbar").css("height", scrollPercent + "px");
 });
-
-
-
+//---SCROLLFUNCTIONS---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 //---ROLLDOWNTEXT---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
