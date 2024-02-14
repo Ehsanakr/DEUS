@@ -16,6 +16,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="./styles/style.css">
+
 </head>
 
 
@@ -307,7 +308,18 @@
         </section>
 
     </main>
-
+    <script>
+        // Initialize Scrollify with mandatory snap scrolling
+    $.scrollify({
+      section: "section",
+      scrollSpeed: 500,
+      scrollbars: false,
+      setHeights: false,
+      snap: true,
+      scrollSnapOffset: 0,
+      easing: "easeOutSine",
+    });
+    </script>
 </body>
 
 <script id="vertexShader" type="x-shader/x-vertex">

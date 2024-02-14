@@ -254,16 +254,7 @@ introTimeline.from(uniforms.iAnimProgress_2.value, {
 
 //---SCROLLIFY---↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-// Initialize Scrollify with mandatory snap scrolling
-$.scrollify({
-  section: "section",
-  scrollSpeed: 500,
-  scrollbars: false,
-  setHeights: false,
-  snap: true,
-  scrollSnapOffset: 0,
-  easing: "easeOutSine",
-});
+
 
 // Dark/Light mode function
 const toggleSwitch = document.getElementById("toggleSwitch");
